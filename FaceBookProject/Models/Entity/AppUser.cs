@@ -13,7 +13,12 @@ namespace FaceBookProject.Models.Entity
     public class AppUser:IdentityUser
     {
         [Required]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }       
+        
+        [Required]
+        public DateTime Birthday { get; set; }
         //public string Profile { get; set; }
         //[NotMapped]
         //public IFormFile ProfilePhoto { get; set; }

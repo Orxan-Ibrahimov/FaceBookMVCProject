@@ -9,7 +9,11 @@ namespace FaceBookProject.ViewModels.Account
     public class RegisterVM
     {
         [Required, StringLength(maximumLength: 100)]
-        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        [Required, StringLength(maximumLength: 100)]
+        public string LastName { get; set; }
+        [Required]
+        public DateTime Birthday { get; set; }
         [Required, DataType("nvarchar(50)")]
         public string Username { get; set; }
         [Required, DataType(DataType.EmailAddress)]

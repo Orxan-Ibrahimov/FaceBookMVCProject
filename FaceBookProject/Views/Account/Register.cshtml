@@ -1,4 +1,4 @@
-﻿
+﻿@model RegisterVM
 @{
     Layout = null;
 }
@@ -29,47 +29,50 @@
                                 <p class="text-muted text-center fw-bold">Hızlı ve kolaydır.</p>
                             </div>
                             <div class="card-body">
-                                <form class="row">
+                                <form class="row" method="post">
                                     <div class="col-6 my-2">
-                                        <input type="text" class="form-control" placeholder="Adin" />
+                                        <input asp-for="FirstName" class="form-control" placeholder="Adin" />
                                     </div>
                                     <div class="col-6 my-2">
-                                        <input type="text" class="form-control" placeholder="Soyadin" />
+                                        <input asp-for="LastName" class="form-control" placeholder="Soyadin" />
                                     </div>
                                     <div class="col-12 my-2">
-                                        <input type="text" class="form-control"
-                                               placeholder="Cep telefonu numarasai veya e-posta" />
+                                        <input asp-for="Username" class="form-control" placeholder="Username" />
                                     </div>
                                     <div class="col-12 my-2">
-                                        <input type="password" class="form-control" placeholder="Yeni Sifre" />
+                                        <input asp-for="Email" class="form-control" placeholder="E-posta" />
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <input asp-for="Password" class="form-control" placeholder="Sifre" />
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Yeni Sifre" />
                                     </div>
                                     <div class="col-12 my-2">
                                         <p class="small text-muted mb-0">Doğum Tarihi</p>
                                         <div class="row">
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
+                                            <div class="col-12">
+                                                <input asp-for="Birthday" class="form-control" />
                                             </div>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-12 my-2">
                                         <p class="small text-muted">Cinsiyet</p>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
+                                        @*<div class="row">
+                <div class="col-4">
+                    <label>
+                        <input type="radio" hidden value="Man" class="form-control" />
+                        <button>Man</button>
+                    </label>
+                </div>
+                <div class="col-4">
+                    <input type="radio" value="Woman" class="form-control" />
+                </div>
+                <div class="col-4">
+                    <input type="radio" value="Special" class="form-control" />
+                </div>
+            </div>*@
                                     </div>
                                     <div class="col-12 my-2">
                                         <p class="text-muted small">
@@ -78,7 +81,7 @@
                                             bildirimleri istediğin zaman durdurabilirsin.
                                         </p>
                                     </div>
-                                    <button class="col-6 offset-3 rounded py-2 bg-success text-white">Kaydol</button>
+                                    <button type="submit" class="col-6 offset-3 rounded py-2 bg-success text-white">Kaydol</button>
                                     <a class="col-6 offset-3 rounded py-2 text-primary text-center fw-bold" href="">Hesabın zaten var mı?</a>
                                 </form>
                             </div>

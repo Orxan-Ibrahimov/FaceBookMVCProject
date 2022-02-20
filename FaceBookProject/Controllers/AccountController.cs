@@ -1,4 +1,5 @@
 ﻿using FaceBookProject.DAL;
+using FaceBookProject.Helpers.Methods;
 using FaceBookProject.Models.Entity;
 using FaceBookProject.ViewModels.Account;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +43,7 @@ namespace FaceBookProject.Controllers
             HttpContext.Response.Cookies.Append("user",userData);
 
             string message = "Security code for registration";
-            //MailOperation
+            MailOperations.SendMessage(register.Email,message,register.SecurityCode);           
 
             return View("CompleteRegister");
         }
@@ -71,7 +72,9 @@ namespace FaceBookProject.Controllers
 
             AppUser user = new AppUser()
             {
-                FullName = registerVM.FullName,
+                FirstName = registerVM.FirstName,
+                LastName = registerVM.LastName,
+                Birthday = registerVM.Birthday,
                 UserName = registerVM.Username,
                 Email = registerVM.Email
             };
@@ -94,6 +97,37 @@ namespace FaceBookProject.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<ActionResult> Login(LoginVM login)
+        {
+            if (!ModelState.IsValid)
+                return View(login);
+
+            var user = await _userManager.FindByNameAsync(login.Username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Username or Password is not correct");
+                return View(login);
+            }
+
+            var result =  await _signInManager.PasswordSignInAsync(user,login.Password,false,false);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Username or Password is not correct");
+                return View(login);
+            }
+            return RedirectToAction("Index","Home");
+        }
+
+        public async Task<ActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login","Account");
         }
 
     }

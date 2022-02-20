@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginVM
 @{
     Layout = null;
 }
@@ -30,16 +30,15 @@
                                 <p class="text-muted text-center fw-bold">Hızlı ve kolaydır.</p>
                             </div>
                             <div class="card-body">
-                                <form class="row">
+                                <form class="row" method="post">
                                     <div class="col-12 my-2">
-                                        <input type="text" class="form-control"
-                                               placeholder="Cep telefonu numarasai veya e-posta" />
+                                        <input asp-for="Username" class="form-control" placeholder="Username" />
                                     </div>
                                     <div class="col-12 my-2">
-                                        <input type="password" class="form-control" placeholder="Yeni Sifre" />
+                                        <input asp-for="Password" class="form-control" placeholder="Sifre" />
                                     </div>
 
-                                    <button class="col-12 rounded py-2 bg-primary text-white text-center">Giris Yap</button>
+                                    <button type="submit" class="col-12 rounded py-2 bg-primary text-white text-center">Giris Yap</button>
                                     <a class="col-6 offset-3 rounded py-2 text-primary text-center fw-bold" href="">Hesabını mı unuttun?</a>
                                     <a class="col-6 offset-3 rounded py-2 bg-success text-white text-center" href="">Hesabını mı unuttun?</a>
                                 </form>
