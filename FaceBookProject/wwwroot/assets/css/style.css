@@ -19,13 +19,23 @@ header {
 .search {
   display: flex;
   align-items: center;
-  background-color: #3a3b3c; }
-  .search input {
-    background-color: #3a3b3c; }
-    .search input:focus {
-      background-color: #3a3b3c;
-      box-shadow: none;
-      border: none; }
+  background-color: #3a3b3c; 
+ 
+}
+    .search input {
+        background-color: #3a3b3c;
+        color: white;
+    }
+        .search input:focus {
+            background-color: #3a3b3c;
+            box-shadow: none;
+            border: none;
+            color: white;
+        }
+        .search button:focus {
+            box-shadow: none;
+            border: none;
+        }
 
 .social-icons li a {
   transition: all 0.3s linear;

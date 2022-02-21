@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    [Migration("20220219213356_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20220220213535_FirstMigration282qeeasklkkdwez")]
+    partial class FirstMigration282qeeasklkkdwez
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,7 +97,7 @@ namespace FaceBookProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("FaceBookProject.Models.Entity.Friend", b =>
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,17 @@ namespace FaceBookProject.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
+                    b.Property<string>("FriendId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FriendId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Friends");
                 });
@@ -149,31 +159,6 @@ namespace FaceBookProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Suggests");
-                });
-
-            modelBuilder.Entity("FaceBookProject.Models.Entity.UserFriend", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("FriendId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FriendId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("UserFriends");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.UserMessage", b =>
@@ -360,15 +345,15 @@ namespace FaceBookProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FaceBookProject.Models.Entity.UserFriend", b =>
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
-                    b.HasOne("FaceBookProject.Models.Entity.Friend", "Friend")
-                        .WithMany("UserFriends")
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
+                        .WithMany()
                         .HasForeignKey("FriendId");
 
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
-                        .WithMany("UserFriends")
-                        .HasForeignKey("UserId1");
+                        .WithMany("Friends")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.UserMessage", b =>

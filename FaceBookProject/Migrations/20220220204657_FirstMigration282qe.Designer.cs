@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220204657_FirstMigration282qe")]
+    partial class FirstMigration282qe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,14 +110,12 @@ namespace FaceBookProject.Migrations
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
                     b.Property<string>("FriendId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FriendId");
 
                     b.HasIndex("UserId");
 
@@ -345,10 +345,6 @@ namespace FaceBookProject.Migrations
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
-                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
-                        .WithMany()
-                        .HasForeignKey("FriendId");
-
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
                         .WithMany("Friends")
                         .HasForeignKey("UserId");

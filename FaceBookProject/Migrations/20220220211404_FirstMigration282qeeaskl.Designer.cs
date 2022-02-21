@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220211404_FirstMigration282qeeaskl")]
+    partial class FirstMigration282qeeaskl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,11 +348,12 @@ namespace FaceBookProject.Migrations
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
-                        .WithMany()
-                        .HasForeignKey("FriendId");
+                        .WithMany("Friends")
+                        .HasForeignKey("FriendId")
+                        .HasConstraintName("FK_Verbinding_EindStad");
 
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
-                        .WithMany("Friends")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 

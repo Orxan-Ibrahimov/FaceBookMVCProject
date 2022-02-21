@@ -50,19 +50,6 @@ namespace FaceBookProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Friends",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Friends", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -203,17 +190,11 @@ namespace FaceBookProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId1 = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: true),
-                    FriendId = table.Column<int>(nullable: true)
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserFriends", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserFriends_Friends_FriendId",
-                        column: x => x.FriendId,
-                        principalTable: "Friends",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserFriends_AspNetUsers_UserId1",
                         column: x => x.UserId1,
@@ -317,11 +298,6 @@ namespace FaceBookProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFriends_FriendId",
-                table: "UserFriends",
-                column: "FriendId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserFriends_UserId1",
                 table: "UserFriends",
                 column: "UserId1");
@@ -375,9 +351,6 @@ namespace FaceBookProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Friends");
 
             migrationBuilder.DropTable(
                 name: "Messages");

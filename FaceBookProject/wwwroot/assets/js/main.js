@@ -83,6 +83,7 @@ function CreateButon(input) {
 
     let message = document.createElement('p');
     message.classList.add('message');
+    //message.innerHTML = input.textContent;
     message.textContent = input.textContent;
 
     messageBox.appendChild(message);

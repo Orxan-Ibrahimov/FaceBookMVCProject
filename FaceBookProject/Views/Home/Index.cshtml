@@ -180,7 +180,7 @@
 
                 <ul id="friends" class="list-group px-0 ">
                     <h4 class="text-muted my-3">Kisiler</h4>
-                    @*@foreach (var userFriend in Model.User.UserFriends)
+                    @foreach (var friend in Model.User.Friends)
                     {
                         <li class="list-group-item bg-transparent p-0 border-0">
                             <a href="" class="option rounded d-flex align-items-center px-2 py-3">
@@ -191,56 +191,10 @@
                                         <span class="visually-hidden">New alerts</span>
                                     </span>
                                 </div>
-                                <h6 class="text-white mx-2">@userFriend.Friend.</h6>
+                                <h6 class="text-white mx-2">@friend.Friend.FirstName @friend.Friend.LastName</h6>
                             </a>
                         </li>
-                    }*@
-                    <li class="list-group-item bg-transparent p-0 border-0">
-                        <a href="" class="option rounded d-flex align-items-center px-2 py-3">
-                            <div class="position-relative">
-                                <img src="~/assets/img/chicken.jpg" width="40" height="40" class="rounded-circle"
-                                     alt="">
-                                <span class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
-                                    <span class="visually-hidden">New alerts</span>
-                                </span>
-                            </div>
-                            <h6 class="text-white mx-2">Xaqani Xaliqov</h6>
-                        </a>
-                    </li>
-                    <li class="list-group-item bg-transparent p-0 border-0">
-                        <a href="" class="option rounded d-flex align-items-center px-2 py-3">
-                            <div class="position-relative">
-                                <img src="~/assets/img/dragon.png" width="40" height="40" class="rounded-circle"
-                                     alt="">
-                                <span class="last-seen position-absolute bottom-0 badge rounded-pill bg-dark text-success p-1">
-                                    11s
-                                    <span class="visually-hidden">unread messages</span>
-                                </span>
-                            </div>
-                            <h6 class="text-white mx-2">Huseynaga Huseynzade</h6>
-                        </a>
-                    </li>
-                    <li class="list-group-item bg-transparent p-0 border-0">
-                        <a href="" class="option rounded d-flex align-items-center px-2 py-3">
-                            <img src="~/assets/img/angry-birds.png" width="40" height="40" class="rounded-circle"
-                                 alt="">
-                            <h6 class="text-white mx-2">Samxal Xansuvarov</h6>
-                        </a>
-                    </li>
-                    <li class="list-group-item bg-transparent p-0 border-0">
-                        <a href="" class="option rounded d-flex align-items-center px-2 py-3">
-                            <img src="~/assets/img/basketball.png" width="40" height="40" class="rounded-circle"
-                                 alt="">
-                            <h6 class="text-white mx-2">Ehmed Meherremli</h6>
-                        </a>
-                    </li>
-                    <li class="list-group-item bg-transparent p-0 border-0">
-                        <a href="" class="option rounded d-flex align-items-center px-2 py-3">
-                            <img src="~/assets/img/candy-crash.png" width="40" height="40" class="rounded-circle"
-                                 alt="">
-                            <h6 class="text-white mx-2">Eli Meherremli</h6>
-                        </a>
-                    </li>
+                    }                    
                 </ul>
 
                 <ul id="group-talking" class="list-group px-0 ">

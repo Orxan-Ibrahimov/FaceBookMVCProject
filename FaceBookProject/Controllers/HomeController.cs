@@ -2,6 +2,7 @@
 using FaceBookProject.Models.Entity;
 using FaceBookProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace FaceBookProject.Controllers
 
         public IActionResult Index()
         {
-            AppUser user = _db.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name);
+            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).FirstOrDefault(u=>u.UserName == User.Identity.Name);
 
             if (user == null)
                 return NotFound();
@@ -34,6 +35,24 @@ namespace FaceBookProject.Controllers
 
             return View(home);
         }
-     
+
+        public IActionResult SearchUser(string search)
+        {
+            if (string.IsNullOrEmpty(search))
+                return View();
+
+            List<AppUser> users = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Where(u => u.UserName.Contains(search)).ToList();
+
+            if (users == null)
+                return NotFound();
+
+            HomeVM home = new HomeVM
+            {
+                AllUsers = users
+            };
+
+            return View(home);
+        }
+
     }
 }

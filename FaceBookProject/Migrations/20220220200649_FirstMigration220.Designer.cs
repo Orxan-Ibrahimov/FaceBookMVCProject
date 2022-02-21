@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220200649_FirstMigration220")]
+    partial class FirstMigration220
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,19 +109,20 @@ namespace FaceBookProject.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
-                    b.Property<string>("FriendId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("FriendId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FriendId");
+                    b.HasIndex("UserId1");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Friends");
+                    b.ToTable("UserFriends");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
@@ -345,13 +348,9 @@ namespace FaceBookProject.Migrations
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
-                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
-                        .WithMany()
-                        .HasForeignKey("FriendId");
-
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
                         .WithMany("Friends")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.UserMessage", b =>

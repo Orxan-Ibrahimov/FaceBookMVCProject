@@ -12,68 +12,8 @@
 </head>
 
 <body class="bg-dark">
-    <header class="py-3">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-4">
-                    <div class="d-flex align-items-center">
-                        <img src="assets/img/Facebook-logo.png" width="75" alt="">
-                        <div class="search rounded-pill border border-dark overflow-hidden">
-                            <i class="fas fa-search ps-3"></i>
-                            <input type="text" class="form-control border-0" placeholder="Facebook'ta ara">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 d-none d-md-block">
-                    <ul class="row social-icons justify-content-center align-items-center h-100 m-0">
-                        <li class="col-3 h-100 d-flex justify-content-center align-items-center">
-                            <a href="">
-                                <i class="fas fa-home"></i>
-                            </a>
-                        </li>
-                        <li class="col-3 h-100 d-flex justify-content-center align-items-center">
-                            <a href="">
-                                <i class="fas fa-user-friends"></i>
-                            </a>
-                        </li>
-                        <li class="col-3 h-100 d-flex justify-content-center align-items-center active">
-                            <a href="">
-                                <i class="fas fa-video"></i>
-                            </a>
-                        </li>
-                        <li class="col-3 h-100 d-flex justify-content-center align-items-center">
-                            <a href="">
-                                <i class="fas fa-cog"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-4 offset-4 offset-md-0">
-                    <ul class="d-flex align-items-center justify-content-end m-0">
-                        <li class="user d-none d-xl-block">
-                            <a href="" class="d-flex align-items-center">
-                                <img src="assets/img/1.jpg" class="overflow-hidden rounded-circle" alt="avatar"
-                                     width="30" height="30">
-                                <h5 class="text-white my-0 mx-2">Cavid</h5>
-                            </a>
-                        </li>
-                        <li class="menu-icon mx-2">
-                            <a href=""><i class="fas fa-bars"></i></a>
-                        </li>
-                        <li class="menu-icon mx-2">
-                            <a href=""><i class="fab fa-facebook-messenger"></i></a>
-                        </li>
-                        <li class="menu-icon mx-2">
-                            <a href=""><i class="fas fa-bell"></i></a>
-                        </li>
-                        <li class="menu-icon mx-2">
-                            <a href=""><i class="fas fa-caret-down"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>    
+   
+    @await Component.InvokeAsync("Header")
 
     <main>
         @RenderBody()
@@ -82,7 +22,7 @@
     <div class="chat">
         <div class="chat-header">
             <a href="" class="chat-header__profile p-2 text-white">
-                <img src="assets/img/avatar.jpg" width="30" height="30" class="rounded-circle" alt="chat" />
+                <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle" alt="chat" />
                 <p class="mx-2 mb-0">Xaqani Xaliqov</p>
                 <i class="fas fa-caret-down"></i>
             </a>
@@ -96,7 +36,7 @@
         </div>
         <div class="chat-body">
             <div class="chat-body__info">
-                <img src="assets/img/avatar.jpg" width="50" height="50" class="rounded-circle" alt="profile" />
+                <img src="~/assets/img/avatar.jpg" width="50" height="50" class="rounded-circle" alt="profile" />
                 <h6 class="text-white my-2">Xaqani Xaliqov</h6>
                 <small class="text-muted">Facebook</small>
                 <small class="text-muted">Facebook'ta arkadassiniz</small>
@@ -104,17 +44,17 @@
             </div>
 
             <div class="message-come d-flex">
-                <img src="assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
+                <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
                 <p class="message">Salam</p>
             </div>
 
             <div class="message-come">
-                <img src="assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
+                <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
                 <p class="message">Salam Necesen Okus ? max-width: 200px; </p>
             </div>
 
             <div class="message-come">
-                <img src="assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
+                <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
                 <p class="message">Salam Necesen Okus ?</p>
             </div>
 
