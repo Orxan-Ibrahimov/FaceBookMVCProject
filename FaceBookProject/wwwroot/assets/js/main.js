@@ -7,6 +7,9 @@ let emoji = document.querySelector('.chat-footer #emoji');
 let closeBtn = document.querySelector('.chat-header #close');
 let sendbtn = document.querySelector('#send');
 let friends = document.querySelectorAll('#friends li a.option');
+let users = document.querySelectorAll('#sendSuggest');
+let accepts = document.querySelectorAll('#accept');
+let regrets = document.querySelectorAll('#regret');
 
 
 window.addEventListener('load', function (params) {
@@ -73,6 +76,42 @@ window.addEventListener('load', function (params) {
     closeBtn.addEventListener('click', function(event) {
         event.preventDefault();
         chat.style.display = 'none';
+    });
+
+    // Send Suggest    
+    users.forEach(user => {        
+        $(user).on('click', function () {
+            let userId = user.getAttribute('data-id');
+            let parent = user.parentElement;
+            user.remove();
+            console.log(parent);
+            $.ajax({
+                url: `/Home/SendSuggest?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(parent).append(response);                    
+                }
+            });
+
+        });
+    });
+
+    // Accept Suggest    
+    accepts.forEach(accept => {
+        $(accept).on('click', function () {
+            let userId = accept.getAttribute('data-id');
+            //let parent = user.parentElement;
+            //user.remove();
+            //console.log(parent);
+            $.ajax({
+                url: `/Home/AcceptSuggest?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(parent).append(response);
+                }
+            });
+
+        });
     });
 });
 

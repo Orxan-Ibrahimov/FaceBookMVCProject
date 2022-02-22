@@ -17,7 +17,13 @@ namespace FaceBookProject.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            HeaderVM header = new HeaderVM();
+            HeaderVM header = new HeaderVM
+            {
+                User = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)
+            };
+
+            if (header.User == null)
+                return View();
 
             return View(await Task.FromResult(header));
         }

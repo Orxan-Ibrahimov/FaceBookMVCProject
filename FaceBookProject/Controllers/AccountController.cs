@@ -76,7 +76,8 @@ namespace FaceBookProject.Controllers
                 LastName = registerVM.LastName,
                 Birthday = registerVM.Birthday,
                 UserName = registerVM.Username,
-                Email = registerVM.Email
+                Email = registerVM.Email,
+                Profile = "default.jpg"
             };
 
             IdentityResult result = await _userManager.CreateAsync(user,registerVM.Password);

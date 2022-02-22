@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220221205822_ChangeSuggestaTable")]
+    partial class ChangeSuggestaTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,9 +73,6 @@ namespace FaceBookProject.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Profile")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -345,11 +344,11 @@ namespace FaceBookProject.Migrations
             modelBuilder.Entity("FaceBookProject.Models.Entity.Suggest", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Acceptor")
-                        .WithMany("Suggests")
+                        .WithMany()
                         .HasForeignKey("AcceptorId");
 
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Sender")
-                        .WithMany()
+                        .WithMany("Suggests")
                         .HasForeignKey("SenderId");
                 });
 

@@ -9,6 +9,12 @@ ul, ol {
 a {
   text-decoration: none; }
 
+.user-alert {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); }
+
 header {
   z-index: 1;
   position: sticky;
@@ -19,23 +25,17 @@ header {
 .search {
   display: flex;
   align-items: center;
-  background-color: #3a3b3c; 
- 
-}
-    .search input {
-        background-color: #3a3b3c;
-        color: white;
-    }
-        .search input:focus {
-            background-color: #3a3b3c;
-            box-shadow: none;
-            border: none;
-            color: white;
-        }
-        .search button:focus {
-            box-shadow: none;
-            border: none;
-        }
+  background-color: #3a3b3c; }
+  .search input {
+    background-color: #3a3b3c; }
+    .search input:focus {
+      background-color: #3a3b3c;
+      box-shadow: none;
+      border: none;
+      color: white; }
+  .search button:focus {
+    box-shadow: none;
+    border: none; }
 
 .social-icons li a {
   transition: all 0.3s linear;

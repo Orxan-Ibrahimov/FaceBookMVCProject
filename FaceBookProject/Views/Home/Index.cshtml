@@ -178,6 +178,27 @@
                     <li></li>
                 </ul>
 
+                <ul>
+                    @foreach (var suggest in Model.User.Suggests)
+                    {
+                        <li>
+                            <div class="d-flex">
+                                <img src="~/assets/img/@suggest.Sender.Profile" width="75" height="75" class="rounded-circle" alt="profile" />
+                                <div class="mx-2 w-100">
+                                    <div class="d-flex justify-content-between w-100">
+                                        <p class="text-white">@suggest.Sender.FirstName @suggest.Sender.LastName</p>
+                                        <p class="text-muted">@(((DateTime.Now - suggest.CreatedDate).Days > 0) ? (suggest.CreatedDate.ToString("dd.MM.yyyy")):(suggest.CreatedDate.ToString("HH:mm")))</p>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <a id="accept" data-id="@suggest.Sender.Id" class="btn px-4 me-2 btn-primary">Onayla</a>
+                                        <a id="accept" data-id="@suggest.Sender.Id" class="btn px-4 ms-2 btn-secondary">Sil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+
                 <ul id="friends" class="list-group px-0 ">
                     <h4 class="text-muted my-3">Kisiler</h4>
                     @foreach (var friend in Model.User.Friends)
@@ -185,7 +206,7 @@
                         <li class="list-group-item bg-transparent p-0 border-0">
                             <a href="" class="option rounded d-flex align-items-center px-2 py-3">
                                 <div class="position-relative">
-                                    <img src="~/assets/img/chicken.jpg" width="40" height="40" class="rounded-circle"
+                                    <img src="~/assets/img/@friend.Friend.Profile" width="40" height="40" class="rounded-circle"
                                          alt="">
                                     <span class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                         <span class="visually-hidden">New alerts</span>
@@ -194,7 +215,7 @@
                                 <h6 class="text-white mx-2">@friend.Friend.FirstName @friend.Friend.LastName</h6>
                             </a>
                         </li>
-                    }                    
+                    }
                 </ul>
 
                 <ul id="group-talking" class="list-group px-0 ">
@@ -206,7 +227,7 @@
                                      alt="">
                                 <span class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
-                                    </span>
+                                </span>
                             </div>
                             <h6 class="text-white mx-2">Celal</h6>
                         </a>
@@ -218,7 +239,7 @@
                                      alt="">
                                 <span class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
-                                    </span>
+                                </span>
                             </div>
                             <h6 class="text-white mx-2">Celal,Orxan,Cavid</h6>
                         </a>
@@ -230,7 +251,7 @@
                                      alt="">
                                 <span class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
                                     <span class="visually-hidden">New alerts</span>
-                                    </span>
+                                </span>
                             </div>
                             <h6 class="text-white mx-2">Nihad,Farid ve digerleri</h6>
                         </a>

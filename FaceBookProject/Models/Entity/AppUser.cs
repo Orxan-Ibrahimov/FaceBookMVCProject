@@ -18,11 +18,11 @@ namespace FaceBookProject.Models.Entity
         public string LastName { get; set; }     
         [Required]
         public DateTime Birthday { get; set; }
-        //public string Profile { get; set; }
-        //[NotMapped]
-        //public IFormFile ProfilePhoto { get; set; }
+        public string Profile { get; set; }
+        [NotMapped]
+        public IFormFile ProfilePhoto { get; set; }
         public ICollection<Friendship> Friends { get; set; }
-        public List<UserSuggest> UserSuggests { get; set; }
+        public List<Suggest> Suggests { get; set; }
         public List<UserMessage> UserMessages { get; set; }
 
     }
