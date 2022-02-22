@@ -123,5 +123,33 @@ namespace FaceBookProject.Controllers
 
             return View("_AcceptSuggest", home);
         }
+
+        public IActionResult RegretSuggest(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return View();
+
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.Id == id);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (acceptor == null || sender == null)
+                return NotFound();
+
+            Suggest suggest = _db.Suggests.Include(s => s.Sender).Include(s => s.Acceptor).FirstOrDefault(s => s.AcceptorId == acceptor.Id && s.SenderId == sender.Id);
+
+            if (suggest == null)
+                return NotFound();         
+
+           
+            _db.Suggests.Remove(suggest);
+            _db.SaveChanges();
+
+            HomeVM home = new HomeVM
+            {
+                User = acceptor
+            };
+
+            return View("_RegretSuggest", home);
+        }
     }
 }

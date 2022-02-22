@@ -113,6 +113,24 @@ window.addEventListener('load', function (params) {
 
         });
     });
+
+    // Regret Suggest    
+    regrets.forEach(regret => {
+        $(regret).on('click', function () {
+            let userId = regret.getAttribute('data-id');
+            //let parent = user.parentElement;
+            //user.remove();
+            //console.log(parent);
+            $.ajax({
+                url: `/Home/RegretSuggest?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(parent).append(response);
+                }
+            });
+
+        });
+    });
 });
 
 // Function that Create message element in chat 
