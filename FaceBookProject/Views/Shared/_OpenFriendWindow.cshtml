@@ -1,0 +1,65 @@
+﻿@model ChatViewModel
+@{
+    Layout = null;
+}
+
+<div class="chat">
+    <div class="chat-header">
+        <a href="" class="chat-header__profile p-2 text-white">
+            <img src="~/assets/img/@Model.Acceptor.Profile" width="30" height="30" class="rounded-circle" alt="chat" />
+            <p class="mx-2 mb-0">@Model.Acceptor.FirstName @Model.Acceptor.LastName</p>
+            <i class="fas fa-caret-down"></i>
+        </a>
+
+        <ul class="chat-header__operations p-2 mb-0">
+            <li><a href="" class="text-muted"><i class="fas fa-video"></i></a></li>
+            <li><a href="" class="text-muted"><i class="fas fa-phone-alt"></i></a></li>
+            <li><a href="" class="text-muted"><i class="fas fa-minus"></i></a></li>
+            <li><a href="" id="close" class="text-muted"><i class="fas fa-times"></i></a></li>
+        </ul>
+    </div>
+    <div class="chat-body">
+        <div class="chat-body__info">
+            <img src="~/assets/img/@Model.Acceptor.Profile" width="50" height="50" class="rounded-circle" alt="profile" />
+            <h6 class="text-white my-2">@Model.Acceptor.FirstName @Model.Acceptor.LastName</h6>
+            <small class="text-muted">Facebook</small>
+            <small class="text-muted">Facebook'ta arkadassiniz</small>
+            <small class="text-muted">Akra, Gana'da yaşıyor</small>
+        </div>
+
+        @foreach (var message in Model.Messages)
+        {
+            if (message.SenderId == Model.Sender.Id && message.AcceptorId == Model.Acceptor.Id)
+            {
+                <div class="message-sent">
+                    <p class="message">
+                       @message.Text
+                    </p>
+                </div>
+            }
+            else if (message.SenderId == Model.Acceptor.Id && message.AcceptorId == Model.Sender.Id)
+            {
+                <div class="message-come d-flex">
+                    <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
+                    <p class="message">@message.Text</p>
+                </div>
+            }
+        }
+    </div>
+
+    <ul class="chat-footer">
+        <!-- <li><a href="" class="text-muted"><i class="fas fa-plus-circle"></i></a></li> -->
+        <li><a href=""><i class="fas fa-file-image"></i></a></li>
+        <li><a href="" id=""><i class="fas fa-snowman"></i></a></li>
+        <li>
+            <p class="textarea d-flex align-items-end">
+                <span role="textbox" contenteditable></span>
+            </p>
+        </li>
+        <li>
+            <a href="" id="emoji"><i class="fas fa-smile"></i></a>
+        </li>
+        <li><a id="send" data-id="@Model.Acceptor.Id" class="btn"><i class="far fa-paper-plane"></i></a></li>
+    </ul>
+
+</div>

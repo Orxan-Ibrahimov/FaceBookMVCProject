@@ -23,7 +23,7 @@ namespace FaceBookProject.Models.Entity
         public IFormFile ProfilePhoto { get; set; }
         public ICollection<Friendship> Friends { get; set; }
         public List<Suggest> Suggests { get; set; }
-        public List<UserMessage> UserMessages { get; set; }
+        public List<Message> Messages { get; set; }
 
     }
 }

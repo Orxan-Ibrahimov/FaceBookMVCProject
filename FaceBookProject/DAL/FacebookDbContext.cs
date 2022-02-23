@@ -17,7 +17,6 @@ namespace FaceBookProject.DAL
         public DbSet<Suggest> Suggests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Friendship> Friends { get; set; }
-        public DbSet<UserMessage> UserMessages { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -38,7 +37,12 @@ namespace FaceBookProject.DAL
             builder.Entity<Suggest>()
                .HasOne(d => d.Acceptor)
                   .WithMany(p => p.Suggests)
-                  .HasForeignKey(d => d.AcceptorId);          
+                  .HasForeignKey(d => d.AcceptorId);
+
+            builder.Entity<Message>()
+               .HasOne(d => d.Acceptor)
+                  .WithMany(p => p.Messages)
+                  .HasForeignKey(d => d.AcceptorId);
 
         }
 

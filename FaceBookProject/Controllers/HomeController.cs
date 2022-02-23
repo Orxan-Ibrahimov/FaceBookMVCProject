@@ -151,5 +151,63 @@ namespace FaceBookProject.Controllers
 
             return View("_RegretSuggest", home);
         }
+
+        public IActionResult OpenFriendWindow(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return View();
+
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u=>u.Messages).FirstOrDefault(u => u.Id == id);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (acceptor == null || sender == null)
+                return NotFound();
+
+            List<Message> messages = _db.Messages.OrderBy(m=>m.CreatedDate).ToList();            
+
+            ChatViewModel chat = new ChatViewModel
+            {
+                Acceptor = acceptor,
+                Sender = sender,
+                Messages = messages
+            };         
+
+          
+
+            return View("_OpenFriendWindow", chat);
+        }
+
+        
+        public IActionResult SendMessage(string id,string message)
+        {
+            if (string.IsNullOrEmpty(id))
+                return View();
+
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.Id == id);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (acceptor == null || sender == null)
+                return NotFound();
+
+            Message newMessage = new Message
+            {
+                AcceptorId = acceptor.Id,
+                SenderId = sender.Id,
+                Text = message
+            };
+
+            _db.Messages.Add(newMessage);
+            _db.SaveChanges();
+
+            ChatViewModel chat = new ChatViewModel
+            {
+                Acceptor = acceptor,
+                Sender = sender,
+                Message = newMessage
+            };
+
+            return View("_SendMessage", chat);
+        }
+
     }
 }

@@ -1,20 +1,15 @@
 let faceMenuListItems = document.querySelectorAll('.facemenu-list-item > a');
-let chatBody = document.querySelector('.chat-body');
-let chat = document.querySelector('.chat');
-let message = document.querySelector('.chat-footer .textarea span');
-let emojiBox = document.querySelector('.chat-footer .emoji-container');
-let emoji = document.querySelector('.chat-footer #emoji');
-let closeBtn = document.querySelector('.chat-header #close');
-let sendbtn = document.querySelector('#send');
 let friends = document.querySelectorAll('#friends li a.option');
 let users = document.querySelectorAll('#sendSuggest');
-let accepts = document.querySelectorAll('#accept');
+let accepts = document.querySelectorAll('#accept'); 
 let regrets = document.querySelectorAll('#regret');
+let body = document.querySelectorAll('body');
+let emojiBox = document.querySelector('.chat-footer .emoji-container');
+//let message = document.querySelector('.chat-footer .textarea span');
+
 
 
 window.addEventListener('load', function (params) {
-
-
     // submenu's open/close operation at faceMenulist
     faceMenuListItems.forEach(faceMenuListItem => {
         faceMenuListItem.addEventListener('click', function (params) {
@@ -26,65 +21,12 @@ window.addEventListener('load', function (params) {
         });
     });
 
-     //Send Message when click send button
-     sendbtn.addEventListener('click', function(params) {
-        params.preventDefault();
-        
-        if (message.textContent.length != 0){
-            let chatMessage = CreateButon(message);
-            chatBody.appendChild(chatMessage);
-
-        }     
-
-    });
-
-    message.addEventListener('focus', function(params) {       
-        //Send Message when user press Enter button at message input's onfocus     
-        message.onkeypress = function(event) {
-                 if (event.keyCode === 13) {
-                event.preventDefault();
-
-                if (message.textContent.length != 0){
-                    let chatMessage = CreateButon(message);
-                    chatBody.appendChild(chatMessage);
-
-                }                            
-            }        
-        }     
-    });
-
-    //emoji list Crete/remove operation
-    emoji.addEventListener('click', function (event) {
-        event.preventDefault();
-
-        let emojiList = CreateEmojiList();
-        if (emoji.parentElement.querySelector('.emoji-container') == null)
-            emoji.parentElement.appendChild(emojiList);
-        else
-            emoji.parentElement.querySelector('.emoji-container').remove();
-    });
-
-    friends.forEach(friend => {
-        friend.addEventListener('click', function(event) {
-            event.preventDefault();
-            chat.style.display = "block";
-    
-        });
-    });
-   
-
-    closeBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        chat.style.display = 'none';
-    });
-
     // Send Suggest    
     users.forEach(user => {        
         $(user).on('click', function () {
             let userId = user.getAttribute('data-id');
             let parent = user.parentElement;
             user.remove();
-            console.log(parent);
             $.ajax({
                 url: `/Home/SendSuggest?id=${userId}`,
                 type: "Get",
@@ -113,7 +55,7 @@ window.addEventListener('load', function (params) {
 
         });
     });
-
+    
     // Regret Suggest    
     regrets.forEach(regret => {
         $(regret).on('click', function () {
@@ -131,75 +73,147 @@ window.addEventListener('load', function (params) {
 
         });
     });
+
+    friends.forEach(friend => {
+        $(friend).on('click', function () {
+            if ($('.chat')) {
+                $('.chat').remove();
+            }
+            let userId = friend.getAttribute('data-id');
+            //let parent = user.parentElement;
+            //user.remove();
+            $.ajax({
+                url: `/Home/OpenFriendWindow?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(body).append(response);
+                }
+            });
+
+        });
+    });
 });
 
-// Function that Create message element in chat 
-function CreateButon(input) {
-    let messageBox = document.createElement('div');
-    messageBox.classList.add('message-sent');
 
-    let message = document.createElement('p');
-    message.classList.add('message');
-    //message.innerHTML = input.textContent;
-    message.textContent = input.textContent;
+//It works after ajax complete
+$(document).ajaxComplete(function () {
+    let chat = document.querySelector('.chat');
+    let closeBtn = document.querySelector('.chat-header #close');
+    let message = document.querySelector('.chat-footer .textarea span');
+    let sendbtn = document.querySelector('#send');
+    let chatBody = document.querySelector('.chat-body');
+    let emoji = document.querySelector('.chat-footer #emoji');
 
-    messageBox.appendChild(message);
-    input.textContent = null;
 
-    return messageBox;
-}
+      message.addEventListener('focus', function(params) {       
+        //Send Message when user press Enter button at message input's onfocus     
+        message.onkeypress = function(event) {
+                 if (event.keyCode === 13) {
+                event.preventDefault();
+                     let userId = sendbtn.getAttribute('data-id');
+                     let text = message.textContent;
 
-//Function that Create emoji list 
-function CreateEmojiList() {
-    let emojiList = document.createElement('ul');
-    emojiList.classList.add('emoji-container');
-    // 128512
-    // 128568
-    
-    let emoliListItem = document.createElement('li');
-    emoliListItem.classList.add('w-100');
-    emojiList.appendChild(emoliListItem);
+                     if (message.textContent.length != 0) {
+                         $.ajax({
+                             url: `/Home/SendMessage?id=${userId}&message=${text}`,
+                             type: "Get",
+                             success: function (response) {
+                                 message.textContent = null;
+                                 $(chatBody).append(response);
+                             }
+                         });
+                     }
+            }        
+        }     
+    });
 
-    let p = document.createElement('p');
-    p.classList.add('text-muted');
-    p.classList.add('small');
-    p.classList.add('fw-bold');
-    p.classList.add('mx-2');
-    p.textContent = 'Gülen Yüzler ve İnsanlar';
-    emoliListItem.appendChild(p);
+     //Send Message when click send button
+     sendbtn.addEventListener('click', function(params) {
+        params.preventDefault();
+         let userId = sendbtn.getAttribute('data-id');
+         let text = message.textContent;
+        
 
-    for (let index = 128512; index < 128591; index++) {
+         if (message.textContent.length != 0) {
+             $.ajax({
+                 url: `/Home/SendMessage?id=${userId}&message=${text}`,
+                 type: "Get",
+                 success: function (response) {
+                     message.textContent = null;
+                     $(chatBody).append(response);
+                 }
+             });            
+        }     
+    });
+     
+    closeBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        chat.remove();
+    });
+
+    //emoji list Crete/remove operation
+    emoji.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        let emojiList = CreateEmojiList();
+        if (emoji.parentElement.querySelector('.emoji-container') == null)
+            emoji.parentElement.appendChild(emojiList);
+        else
+            emoji.parentElement.querySelector('.emoji-container').remove();
+    });
+
+
+    //Function that Create emoji list 
+    function CreateEmojiList() {
+        let emojiList = document.createElement('ul');
+        emojiList.classList.add('emoji-container');
+        
         let emoliListItem = document.createElement('li');
+        emoliListItem.classList.add('w-100');
         emojiList.appendChild(emoliListItem);
 
-        let emojiLink = document.createElement('a');
-        emoliListItem.appendChild(emojiLink);
+        let p = document.createElement('p');
+        p.classList.add('text-muted');
+        p.classList.add('small');
+        p.classList.add('fw-bold');
+        p.classList.add('mx-2');
+        p.textContent = 'Gülen Yüzler ve İnsanlar';
+        emoliListItem.appendChild(p);
 
-        let emojiSpan = document.createElement('span');
-        emojiSpan.innerHTML = '&#' + index;
-        emojiLink.appendChild(emojiSpan);
+        for (let index = 128512; index < 128591; index++) {
+            let emoliListItem = document.createElement('li');
+            emojiList.appendChild(emoliListItem);
 
-        emojiLink.addEventListener('click', function (params) {
-        message.textContent += emojiSpan.textContent;
-        });        
+            let emojiLink = document.createElement('a');
+            emoliListItem.appendChild(emojiLink);
+
+            let emojiSpan = document.createElement('span');
+            emojiSpan.innerHTML = '&#' + index;
+            emojiLink.appendChild(emojiSpan);
+
+            emojiLink.addEventListener('click', function (params) {
+                message.textContent += emojiSpan.textContent;
+            });
+        }
+
+        for (let index = 128064; index < 128170; index++) {
+            let emoliListItem = document.createElement('li');
+            emojiList.appendChild(emoliListItem);
+
+            let emojiLink = document.createElement('a');
+            emoliListItem.appendChild(emojiLink);
+
+            let emojiSpan = document.createElement('span');
+            emojiSpan.innerHTML = '&#' + index;
+            emojiLink.appendChild(emojiSpan);
+
+            emojiLink.addEventListener('click', function (params) {
+                message.textContent += emojiSpan.textContent;
+            });
+        }
+
+        return emojiList;
+
     }
 
-    for (let index = 128064; index < 128170; index++) {
-        let emoliListItem = document.createElement('li');
-        emojiList.appendChild(emoliListItem);
-
-        let emojiLink = document.createElement('a');
-        emoliListItem.appendChild(emojiLink);
-
-        let emojiSpan = document.createElement('span');
-        emojiSpan.innerHTML = '&#' + index;
-        emojiLink.appendChild(emojiSpan);
-
-        emojiLink.addEventListener('click', function (params) {
-        message.textContent += emojiSpan.textContent;
-        });
-}
-
-    return emojiList;
-
-}
+});
