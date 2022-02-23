@@ -1,5 +1,6 @@
 let faceMenuListItems = document.querySelectorAll('.facemenu-list-item > a');
 let friends = document.querySelectorAll('#friends li a.option');
+let allFriends = document.querySelectorAll('#openChat');
 let users = document.querySelectorAll('#sendSuggest');
 let accepts = document.querySelectorAll('#accept'); 
 let regrets = document.querySelectorAll('#regret');
@@ -74,7 +75,7 @@ window.addEventListener('load', function (params) {
         });
     });
 
-    friends.forEach(friend => {
+    allFriends.forEach(friend => {
         $(friend).on('click', function () {
             if ($('.chat')) {
                 $('.chat').remove();
@@ -92,9 +93,6 @@ window.addEventListener('load', function (params) {
 
         });
     });
-
-
-
 });
 
 
@@ -131,7 +129,7 @@ $(document).ajaxComplete(function () {
     });
 
     //Send Message when click send button
-    sendbtn.addEventListener('click', function (params) {
+    sendbtn.onclick = function (params) {
         params.preventDefault();
         let userId = sendbtn.getAttribute('data-id');
         let text = message.textContent;
@@ -147,7 +145,7 @@ $(document).ajaxComplete(function () {
                 }
             });
         }
-    });
+    };
 
     closeBtn.addEventListener('click', function (event) {
         event.preventDefault();
