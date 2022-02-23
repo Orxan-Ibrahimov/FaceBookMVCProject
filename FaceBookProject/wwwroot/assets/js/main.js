@@ -92,6 +92,9 @@ window.addEventListener('load', function (params) {
 
         });
     });
+
+
+
 });
 
 
@@ -105,54 +108,54 @@ $(document).ajaxComplete(function () {
     let emoji = document.querySelector('.chat-footer #emoji');
 
 
-      message.addEventListener('focus', function(params) {       
+    message.addEventListener('focus', function (params) {
         //Send Message when user press Enter button at message input's onfocus     
-        message.onkeypress = function(event) {
-                 if (event.keyCode === 13) {
+        message.onkeypress = function (event) {
+            if (event.keyCode === 13) {
                 event.preventDefault();
-                     let userId = sendbtn.getAttribute('data-id');
-                     let text = message.textContent;
+                let userId = sendbtn.getAttribute('data-id');
+                let text = message.textContent;
 
-                     if (message.textContent.length != 0) {
-                         $.ajax({
-                             url: `/Home/SendMessage?id=${userId}&message=${text}`,
-                             type: "Get",
-                             success: function (response) {
-                                 message.textContent = null;
-                                 $(chatBody).append(response);
-                             }
-                         });
-                     }
-            }        
-        }     
+                if (message.textContent.length != 0) {
+                    $.ajax({
+                        url: `/Home/SendMessage?id=${userId}&message=${text}`,
+                        type: "Get",
+                        success: function (response) {
+                            message.textContent = null;
+                            $(chatBody).append(response);
+                        }
+                    });
+                }
+            }
+        }
     });
 
-     //Send Message when click send button
-     sendbtn.addEventListener('click', function(params) {
+    //Send Message when click send button
+    sendbtn.addEventListener('click', function (params) {
         params.preventDefault();
-         let userId = sendbtn.getAttribute('data-id');
-         let text = message.textContent;
-        
+        let userId = sendbtn.getAttribute('data-id');
+        let text = message.textContent;
 
-         if (message.textContent.length != 0) {
-             $.ajax({
-                 url: `/Home/SendMessage?id=${userId}&message=${text}`,
-                 type: "Get",
-                 success: function (response) {
-                     message.textContent = null;
-                     $(chatBody).append(response);
-                 }
-             });            
-        }     
+
+        if (message.textContent.length != 0) {
+            $.ajax({
+                url: `/Home/SendMessage?id=${userId}&message=${text}`,
+                type: "Get",
+                success: function (response) {
+                    message.textContent = null;
+                    $(chatBody).append(response);
+                }
+            });
+        }
     });
-     
+
     closeBtn.addEventListener('click', function (event) {
         event.preventDefault();
         chat.remove();
     });
 
     //emoji list Crete/remove operation
-    emoji.addEventListener('click', function (event) {
+    emoji.onclick = function (event) {
         event.preventDefault();
 
         let emojiList = CreateEmojiList();
@@ -160,14 +163,14 @@ $(document).ajaxComplete(function () {
             emoji.parentElement.appendChild(emojiList);
         else
             emoji.parentElement.querySelector('.emoji-container').remove();
-    });
+    };
 
 
     //Function that Create emoji list 
     function CreateEmojiList() {
         let emojiList = document.createElement('ul');
         emojiList.classList.add('emoji-container');
-        
+
         let emoliListItem = document.createElement('li');
         emoliListItem.classList.add('w-100');
         emojiList.appendChild(emoliListItem);
