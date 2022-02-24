@@ -1,0 +1,371 @@
+﻿@model ProfileVM
+@{
+    ViewData["Title"] = "UserProfile";
+}
+
+<section>
+    <div class="container-fluid container-xl">
+        <div class="row">
+            <div class="col-12 col-xl-8 offset-xl-2">
+                <div class="profile">
+                    <img src="~/assets/img/xaqani.jpg" class="w-100 h-100" alt="profile" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-xl-8 offset-xl-2">
+                <div class="profile-about border-bottom border-light">
+                    <div class="profile-sub-about">
+                        <div class="avatar">
+                            <img src="~/assets/img/@Model.User.Profile" width="170" height="170" class="rounded-circle"
+                                 alt="avatar" />
+                        </div>
+                        <div class="info mx-5 my-3">
+                            <h1 class="text-white text-center fw-bold">@Model.User.FirstName @Model.User.LastName</h1>
+                            <ul class="d-flex justify-content-center justify-content-md-start p-0">
+                                <li class="me-2">
+                                    <p class="text-white my-0">@Model.User.Friends.Count() arkadas</p>
+                                </li>                                
+                            </ul>
+                            <ul class="d-flex justify-content-center justify-content-md-start p-0">
+                                @foreach (var friendship in Model.User.Friends)
+                                {
+                                    <li style="margin-left: -8px;">
+                                        <a asp-controller="Profile" asp-action="Index" asp-route-id="@friendship.Friend.Id" style="cursor:pointer;">
+                                            <img width="40" height="40" src="~/assets/img/@friendship.Friend.Profile" class="rounded-circle" alt="profile" />
+                                        </a>
+                                    </li>
+
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="butons d-flex flex-column align-items-end">
+                        <button type="button" class="btn btn-primary">
+                            <i class="fas fa-circle-plus"></i>                            
+                            Hikayeye Ekleme yap
+                        </button>
+                        <button type="button" class="btn btn-secondary">
+                            <i class="fas fa-pen"></i>
+                            Profili Duzenle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-xl-8 offset-xl-2">
+                <div class="d-flex justify-content-between">
+                    <ul class="facemenu-list">
+                        <li class="facemenu-list-item rounded">
+                            <a href="#"
+                               class="text-white">Gonderiler</a>
+                        </li>
+                        <li class="facemenu-list-item rounded active">
+                            <a href="#"
+                               class="text-white">Hakkinda</a>
+                        </li>
+                        <li class="facemenu-list-item rounded d-none d-md-block">
+                            <a href="#"
+                               class="text-white">Arkadaslar</a>
+                        </li>
+                        <li class="facemenu-list-item rounded d-none d-md-block">
+                            <a href="#"
+                               class="text-white">Fotoğraflar</a>
+                        </li>
+                        <li class="facemenu-list-item rounded d-none d-lg-block">
+                            <a href="#"
+                               class="text-white">Videolar</a>
+                        </li>
+                        <li class="facemenu-list-item rounded d-none d-lg-block">
+                            <a href="#"
+                               class="text-white">Yer Bildirimleri</a>
+                        </li>
+                        <li class="facemenu-list-item rounded">
+                            <a class="text-white">Diger <i class="fas fa-caret-down"></i></a>
+                            <ul class="facemenu-list sub-facemenu-list">
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Spor</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Muzik</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Filmler</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Tv Programları</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Kitaplar</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Uygulamalar ve Oyunlar</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Beğeniler</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Etkinlikler</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Sorular</a>
+                                </li>
+                                <li class="facemenu-list-item rounded">
+                                    <a href="#" class="text-white">Yapilan Degerlendirmeler</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a href="" class="text-white rounded params"><i class="fas fa-ellipsis-h"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-4 offset-xl-2">
+                <ul class="personal-info px-3 rounded">
+                    <li class="py-1">
+                        <h3 class="text-white">Kunye</h3>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white"><i class="fas fa-briefcase"></i> KEF ELE .SIRKETI'da FSO</p>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white">
+                            <i class="fas fa-briefcase"></i> <a href=""
+                                                                class="text-white">Like Et Like Gor</a> 'da çalıştı
+                        </p>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white"><i class="fas fa-graduation-cap"></i> 9sayli'de okudu</p>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white">
+                            <i class="fas fa-house-damage"></i> <a href=""
+                                                                   class="text-white">Akra, Gana</a>'da yaşıyor
+                        </p>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white">
+                            <i class="fas fa-map-marker-alt"></i> Memleketi <a href=""
+                                                                               class="text-white">Kalküta</a>
+                        </p>
+                    </li>
+                    <li class="py-1">
+                        <p class="text-white"><i class="fas fa-heart"></i> İlişkisi yok</p>
+                    </li>
+                </ul>
+
+                <ul class="row mx-0 px-2 rounded photos">
+                    <li class="col-12 p-2 d-flex justify-content-between">
+                        <a href="" class="heading text-white">Fotoğraflar</a>
+                        <a href="" class="all-photos rounded">Tum fotograflari gor</a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="row mx-0 px-2 rounded photos">
+                    <li class="col-12 p-2 d-flex justify-content-between">
+                        <div>
+                            <a href="" class="heading text-white">Arkadaşlar</a>
+                            <h6 class="px-2 text-white">255 (8 ortak)</h6>
+                        </div>
+                        <a href="" class="all-photos rounded">Tum Arkadaşlari gor</a>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" class="rounded"
+                                 alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                    <li class="col-4 p-2">
+                        <a href="">
+                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
+                        </a>
+                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
+                        <small class="text-muted">5 ortak arkadaş</small>
+                    </li>
+                </ul>
+
+                <ul class="copyright p-0 rounded d-flex flex-wrap">
+                    <li>
+                        <small><a href="" class="text-white"> Gizlilik </a></small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white">·</small>
+                    </li>
+                    <li>
+                        <small><a href="" class="text-white"> Koşullar </a></small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white">·</small>
+                    </li>
+                    <li>
+                        <small><a href="" class="text-white"> Reklam </a></small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white">·</small>
+                    </li>
+                    <li>
+                        <small>
+                            <a href="" class="text-white">
+                                Ad Choices <i class="fab fa-google-play"></i>
+                            </a>
+                        </small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white">·</small>
+                    </li>
+                    <li>
+                        <small><a href="" class="text-white"> Çerezler </a></small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white">·</small>
+                    </li>
+                    <li>
+                        <small><a href="" class="text-white"> Diger </i></a></small>
+                    </li>
+                    <li class="px-1">
+                        <small class="text-white"> · </small>
+                    </li>
+                    <li>
+                        <small class="text-white">Meta © 2022</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-xl-4">
+                <div class="story">
+                    <div class="d-flex align-items-center border-bottom">
+                        <a href="" class="story-image">
+                            <img src="~/assets/img/avatar.jpg" alt="profile" width="50" height="50"
+                                 class="rounded-circle" />
+                        </a>
+                        <input type="text" placeholder="Xaqani'e bir sey yaz..."
+                               class="rounded-pill w-100 m-3 p-2 border-0" />
+                    </div>
+                    <ul class="d-flex justify-content-around p-0 my-3">
+                        <li>
+                            <a href="" class="d-flex p-3 align-items-center rounded">
+                                <i class="fas fa-images text-success mx-2"></i>
+                                <p class="text-white my-0 mx-2">Fotograf/video</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="d-flex p-3 align-items-center rounded">
+                                <i class="fas fa-user-tag text-primary"></i>
+                                <p class="text-white my-0 mx-2">Fotograf/video</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="filter my-3">
+                    <h5 class="text-white">Gönderiler</h5>
+                    <a href="" class="text-white rounded"><i class="fas fa-filter"></i> Filtreler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -42,5 +42,16 @@ namespace FaceBookProject.Controllers
 
             return View(profile);
         }
+
+        public IActionResult UserProfile()
+        {           
+            ProfileVM profile = new ProfileVM
+            {
+                User = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).ThenInclude(s => s.Sender).FirstOrDefault(u => u.UserName == User.Identity.Name),
+            };
+
+
+            return View(profile);
+        }
     }
 }
