@@ -1,4 +1,4 @@
-﻿@model ProfileVM 
+﻿@model ProfileVM
 @{
     ViewData["Title"] = "Index";
 }
@@ -18,7 +18,7 @@
                 <div class="profile-about border-bottom border-light">
                     <div class="profile-sub-about">
                         <div class="avatar">
-                            <img src="~/assets/img/@Model.SearchedUser.Profile" width="170" height="170" class="rounded-circle" alt="profile" />
+                            <img src="~/assets/img/@Model.SearchedUser.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" width="170" height="170" class="rounded-circle" alt="profile" />
                         </div>
                         <div class="info mx-5 my-3">
                             <h1 class="text-white text-center fw-bold">@Model.SearchedUser.FirstName @Model.SearchedUser.LastName</h1>
@@ -26,36 +26,55 @@
                                 <li class="me-2">
                                     <p class="text-white my-0">@Model.SearchedUser.Friends.Count() arkadas</p>
                                 </li>
-                                <li class="me-2">
-                                    <p class="text-white my-0">•</p>
-                                </li>
-                                <li class="me-2">
-                                    <p class="text-white my-0">@Model.MutualFriends.Count() ortak</p>
-                                </li>
+                                @if (Model.SearchedUser.UserName != User.Identity.Name)
+                                {
+                                    <li class="me-2">
+                                        <p class="text-white my-0">•</p>
+                                    </li>
+                                    <li class="me-2">
+                                        <p class="text-white my-0">@Model.MutualFriends.Count() ortak</p>
+                                    </li>
+                                }
                             </ul>
                             <ul class="d-flex justify-content-center justify-content-md-start p-0">
                                 @foreach (var mutualFriend in Model.MutualFriends)
                                 {
                                     <li style="margin-left: -8px;">
                                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@mutualFriend.Id" style="cursor:pointer;">
-                                            <img width="40" height="40" src="~/assets/img/@mutualFriend.Profile" class="rounded-circle" alt="profile" title="@mutualFriend.UserName" />
+                                            <img width="40" height="40" src="~/assets/img/@mutualFriend.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" class="rounded-circle" alt="profile" title="@mutualFriend.UserName" />
                                         </a>
                                     </li>
                                 }
                             </ul>
                         </div>
                     </div>
-
-                    <div class="butons">
-                        <button type="button" class="btn btn-secondary">
-                            <i class="fas fa-user"></i>
-                            Arkadaslar
-                        </button>
-                        <a id="openChat" data-id="@Model.SearchedUser.Id" class="btn btn-primary">
-                            <i class="fab fa-facebook-messenger"></i>
-                            Mesaj
-                        </a>
-                    </div>
+                    @if (Model.SearchedUser.UserName == User.Identity.Name)
+                    {
+                        <div class="butons d-flex flex-column align-items-end">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fas fa-plus"></i>
+                                Hikayeye Ekleme yap
+                            </button>
+                            <button type="button" class="btn btn-secondary my-2">
+                                <i class="fas fa-pen"></i>
+                                Profili Duzenle
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="butons">
+                            <button type="button" class="btn btn-secondary">
+                                <i class="fas fa-user"></i>
+                                Arkadaslar
+                            </button>
+                            <a id="openChat" data-id="@Model.SearchedUser.Id" class="btn btn-primary">
+                                <i class="fab fa-facebook-messenger"></i>
+                                Mesaj
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -373,3 +392,79 @@
         </div>
     </div>
 </section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profili Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="d-flex justify-content-between w-100 my-3">
+                        <h5>Profil Resmi</h5>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Duzenle
+                        </button>
+                    </div>
+                    <img src="~/assets/img/avatar.jpg" alt="profile" width="150" height="150" class="rounded-circle" />
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="d-flex justify-content-between w-100 my-3">
+                        <h5>Kapak Fotoğrafı</h5>
+                        <a class="btn btn-outline-primary">Duzenle</a>
+                    </div>
+                    <img src="~/assets/img/@Model.SearchedUser.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" alt="profile" width="450" height="250" class="rounded" />
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <div class="d-flex justify-content-between w-100 my-3">
+                        <h5>Biyografi</h5>
+                        <a class="btn btn-outline-primary">Ekle</a>
+                    </div>
+                    <form id="biography">
+                        <textarea class="form-control"></textarea>
+                        <a class="btn btn-danger">Iptal</a>
+                        <a class="btn btn-success">Kaydet</a>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Profil Resmini Güncelle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="modal-body" method="post" asp-controller="Profile" asp-action="EditProfileImage">
+                <div>
+                    <label>
+                        <input asp-for="Image.Photo" hidden class="form-control" />
+                        <a class="btn btn-outline-success">Guncelle</a>
+                    </label>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

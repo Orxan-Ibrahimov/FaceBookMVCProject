@@ -18,7 +18,7 @@
                 <div class="profile-about border-bottom border-light">
                     <div class="profile-sub-about">
                         <div class="avatar">
-                            <img src="~/assets/img/@Model.User.Profile" width="170" height="170" class="rounded-circle"
+                            <img src="~/assets/img/@Model.User.Albums.FirstOrDefault(a=>a.Name == "Picture").Images.FirstOrDefault(i=>i.IsProfilePhoto)" width="170" height="170" class="rounded-circle"
                                  alt="avatar" />
                         </div>
                         <div class="info mx-5 my-3">
@@ -33,7 +33,7 @@
                                 {
                                     <li style="margin-left: -8px;">
                                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@friendship.Friend.Id" style="cursor:pointer;">
-                                            <img width="40" height="40" src="~/assets/img/@friendship.Friend.Profile" class="rounded-circle" alt="profile" />
+                                            <img width="40" height="40" src="~/assets/img/@friendship.Friend.Albums.FirstOrDefault(a=>a.Name == "Picture").Images.FirstOrDefault(i=>i.IsProfilePhoto)" class="rounded-circle" alt="profile" />
                                         </a>
                                     </li>
 

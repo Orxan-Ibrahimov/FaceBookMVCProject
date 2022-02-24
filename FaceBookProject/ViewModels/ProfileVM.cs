@@ -10,6 +10,7 @@ namespace FaceBookProject.ViewModels
     {
         public AppUser SearchedUser { get; set; }
         public AppUser User { get; set; }
+        public Image Image { get; set; }
         public List<AppUser> MutualFriends { get; set; }
     }
 }
