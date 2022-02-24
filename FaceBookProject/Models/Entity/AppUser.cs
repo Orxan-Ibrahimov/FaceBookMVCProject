@@ -12,8 +12,15 @@ namespace FaceBookProject.Models.Entity
 {
     public class AppUser:IdentityUser
     {
+       
         [Required]
         public string FirstName { get; set; }
+        public string Profile { get; set; }
+        [NotMapped]
+        public IFormFile ProfilePhoto { get; set; }
+        public string Cover { get; set; }
+        [NotMapped]
+        public IFormFile CoverPhoto { get; set; }
         [Required]
         public string LastName { get; set; }     
         [Required]
@@ -22,6 +29,5 @@ namespace FaceBookProject.Models.Entity
         public List<Suggest> Suggests { get; set; }
         public List<Message> Messages { get; set; }
         public List<Album> Albums { get; set; }
-
     }
 }

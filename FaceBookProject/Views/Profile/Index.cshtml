@@ -18,7 +18,7 @@
                 <div class="profile-about border-bottom border-light">
                     <div class="profile-sub-about">
                         <div class="avatar">
-                            <img src="~/assets/img/@Model.SearchedUser.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" width="170" height="170" class="rounded-circle" alt="profile" />
+                            <img src="~/assets/img/@Model.SearchedUser.Profile" width="170" height="170" class="rounded-circle" alt="profile" />
                         </div>
                         <div class="info mx-5 my-3">
                             <h1 class="text-white text-center fw-bold">@Model.SearchedUser.FirstName @Model.SearchedUser.LastName</h1>
@@ -41,7 +41,7 @@
                                 {
                                     <li style="margin-left: -8px;">
                                         <a asp-controller="Profile" asp-action="Index" asp-route-id="@mutualFriend.Id" style="cursor:pointer;">
-                                            <img width="40" height="40" src="~/assets/img/@mutualFriend.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" class="rounded-circle" alt="profile" title="@mutualFriend.UserName" />
+                                            <img width="40" height="40" src="~/assets/img/@mutualFriend.Profile" class="rounded-circle" alt="profile" title="@mutualFriend.UserName" />
                                         </a>
                                     </li>
                                 }
@@ -50,17 +50,17 @@
                     </div>
                     @if (Model.SearchedUser.UserName == User.Identity.Name)
                     {
-                        <div class="butons d-flex flex-column align-items-end">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="fas fa-plus"></i>
-                                Hikayeye Ekleme yap
-                            </button>
-                            <button type="button" class="btn btn-secondary my-2">
-                                <i class="fas fa-pen"></i>
-                                Profili Duzenle
-                            </button>
-                        </div>
+                <div class="butons d-flex flex-column align-items-end">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary my-2">
+                        <i class="fas fa-plus"></i>
+                        Hikayeye Ekleme yap
+                    </button>
+                    <button type="button" class="btn btn-secondary my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fas fa-plus"></i>
+                        Profili Duzenle
+                    </button>                   
+                </div>
                     }
                     else
                     {
@@ -246,70 +246,17 @@
                         </div>
                         <a href="" class="all-photos rounded">Tum Arkadaşlari gor</a>
                     </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" class="rounded"
-                                 alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-1.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-2.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
-                    <li class="col-4 p-2">
-                        <a href="">
-                            <img src="~/assets/img/photo-3.jpg" width="125" height="125" alt="photo" />
-                        </a>
-                        <p class="m-0"><a href="" class="text-white small">Elnur İskəndərov</a></p>
-                        <small class="text-muted">5 ortak arkadaş</small>
-                    </li>
+                    @foreach (var friendship in Model.SearchedUser.Friends)
+                    {
+                <li class="col-4 p-2">
+                    <a href=""> <img src="~/assets/img/@friendship.Friend.Profile" width="125" height="125" alt="profile" /> </a>
+                    <p class="m-0"><a href="" class="text-white small">@friendship.Friend.FirstName @friendship.Friend.LastName</a></p>
+                    @if (friendship.Friend.Friends.Count(f => Model.User.Friends.FirstOrDefault(s => s.FriendId == f.FriendId) != null) != 0)
+                    {
+                        <small class="text-muted">@(friendship.Friend.Friends.Count(f => Model.User.Friends.FirstOrDefault(s => s.FriendId == f.FriendId) != null)) ortak arkadaş</small>
+                    }                    
+                </li>
+                    }
                 </ul>
 
                 <ul class="copyright p-0 rounded d-flex flex-wrap">
@@ -411,16 +358,21 @@
                             Duzenle
                         </button>
                     </div>
-                    <img src="~/assets/img/avatar.jpg" alt="profile" width="150" height="150" class="rounded-circle" />
+                    <img src="~/assets/img/@Model.SearchedUser.Profile" alt="profile" width="150" height="150" class="rounded-circle" />
                 </div>
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <div class="d-flex justify-content-between w-100 my-3">
+                    <div class="d-flex justify-content-between align-items-center w-100 my-3">
                         <h5>Kapak Fotoğrafı</h5>
-                        <a class="btn btn-outline-primary">Duzenle</a>
+                        <form class="modal-body d-flex justify-content-end" method="post" asp-controller="Profile" asp-action="EditProfileImage">
+                                <label>
+                                    <input asp-for="Image.Photo" hidden class="form-control" />
+                                    <a class="btn btn-outline-success">Ekle</a>
+                                </label>
+                        </form>
                     </div>
-                    <img src="~/assets/img/@Model.SearchedUser.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" alt="profile" width="450" height="250" class="rounded" />
+                    <img src="~/assets/img/@Model.SearchedUser.Profile" alt="profile" width="450" height="250" class="rounded" />
                 </div>
             </div>
             <div class="modal-body">
@@ -431,14 +383,12 @@
                     </div>
                     <form id="biography">
                         <textarea class="form-control"></textarea>
-                        <a class="btn btn-danger">Iptal</a>
-                        <a class="btn btn-success">Kaydet</a>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -446,7 +396,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!--<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -467,4 +417,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->

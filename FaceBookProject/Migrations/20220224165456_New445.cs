@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FaceBookProject.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class New445 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,39 +41,14 @@ namespace FaceBookProject.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
+                    Profile = table.Column<string>(nullable: true),
+                    Cover = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: false),
                     Birthday = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Suggests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Suggests", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +70,26 @@ namespace FaceBookProject.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Albums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Albums", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Albums_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,80 +178,112 @@ namespace FaceBookProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserFriends",
+                name: "Friends",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    FriendId = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFriends", x => x.Id);
+                    table.PrimaryKey("PK_Friends", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserFriends_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Friends_AspNetUsers_FriendId",
+                        column: x => x.FriendId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Friends_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserMessages",
+                name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserSented = table.Column<bool>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true),
-                    MessageId = table.Column<int>(nullable: true)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
+                    SenderId = table.Column<string>(nullable: true),
+                    AcceptorId = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserMessages", x => x.Id);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserMessages_Messages_MessageId",
-                        column: x => x.MessageId,
-                        principalTable: "Messages",
+                        name: "FK_Messages_AspNetUsers_AcceptorId",
+                        column: x => x.AcceptorId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserMessages_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserSuggests",
+                name: "Suggests",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true),
-                    SuggestId = table.Column<int>(nullable: true)
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "dateadd(hour,4,getutcdate())"),
+                    SenderId = table.Column<string>(nullable: true),
+                    AcceptorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSuggests", x => x.Id);
+                    table.PrimaryKey("PK_Suggests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserSuggests_Suggests_SuggestId",
-                        column: x => x.SuggestId,
-                        principalTable: "Suggests",
+                        name: "FK_Suggests_AspNetUsers_AcceptorId",
+                        column: x => x.AcceptorId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserSuggests_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Suggests_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Picture = table.Column<string>(nullable: false),
+                    AlbumId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Albums_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Albums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Albums_UserId",
+                table: "Albums",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -298,29 +325,39 @@ namespace FaceBookProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFriends_UserId1",
-                table: "UserFriends",
-                column: "UserId1");
+                name: "IX_Friends_FriendId",
+                table: "Friends",
+                column: "FriendId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserMessages_MessageId",
-                table: "UserMessages",
-                column: "MessageId");
+                name: "IX_Friends_UserId",
+                table: "Friends",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserMessages_UserId1",
-                table: "UserMessages",
-                column: "UserId1");
+                name: "IX_Images_AlbumId",
+                table: "Images",
+                column: "AlbumId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSuggests_SuggestId",
-                table: "UserSuggests",
-                column: "SuggestId");
+                name: "IX_Messages_AcceptorId",
+                table: "Messages",
+                column: "AcceptorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSuggests_UserId1",
-                table: "UserSuggests",
-                column: "UserId1");
+                name: "IX_Messages_SenderId",
+                table: "Messages",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suggests_AcceptorId",
+                table: "Suggests",
+                column: "AcceptorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Suggests_SenderId",
+                table: "Suggests",
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -341,22 +378,22 @@ namespace FaceBookProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "UserFriends");
+                name: "Friends");
 
             migrationBuilder.DropTable(
-                name: "UserMessages");
-
-            migrationBuilder.DropTable(
-                name: "UserSuggests");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Suggests");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Albums");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

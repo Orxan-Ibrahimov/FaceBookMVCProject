@@ -36,7 +36,7 @@ namespace FaceBookProject.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Album");
+                    b.ToTable("Albums");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.AppUser", b =>
@@ -52,6 +52,9 @@ namespace FaceBookProject.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cover")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -155,20 +158,15 @@ namespace FaceBookProject.Migrations
                     b.Property<int?>("AlbumId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsCoverPhoto")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsProfilePhoto")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Picture")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlbumId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
@@ -383,7 +381,7 @@ namespace FaceBookProject.Migrations
             modelBuilder.Entity("FaceBookProject.Models.Entity.Image", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.Album", "Album")
-                        .WithMany("Images")
+                        .WithMany("Pictures")
                         .HasForeignKey("AlbumId");
                 });
 

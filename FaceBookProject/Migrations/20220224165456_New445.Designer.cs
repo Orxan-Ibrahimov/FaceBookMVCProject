@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    [Migration("20220221205822_ChangeSuggestaTable")]
-    partial class ChangeSuggestaTable
+    [Migration("20220224165456_New445")]
+    partial class New445
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,26 @@ namespace FaceBookProject.Migrations
                 .HasAnnotation("ProductVersion", "3.1.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Album", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Albums");
+                });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.AppUser", b =>
                 {
@@ -34,6 +54,9 @@ namespace FaceBookProject.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cover")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -73,6 +96,9 @@ namespace FaceBookProject.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Profile")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -124,12 +150,36 @@ namespace FaceBookProject.Migrations
                     b.ToTable("Friends");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Image", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AcceptorId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
@@ -139,7 +189,17 @@ namespace FaceBookProject.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AcceptorId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -169,34 +229,6 @@ namespace FaceBookProject.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Suggests");
-                });
-
-            modelBuilder.Entity("FaceBookProject.Models.Entity.UserMessage", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("MessageId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("UserSented")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MessageId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("UserMessages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -330,6 +362,13 @@ namespace FaceBookProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Album", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("Albums")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
@@ -341,26 +380,33 @@ namespace FaceBookProject.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("FaceBookProject.Models.Entity.Suggest", b =>
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Image", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Album", "Album")
+                        .WithMany("Pictures")
+                        .HasForeignKey("AlbumId");
+                });
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Acceptor")
-                        .WithMany()
+                        .WithMany("Messages")
                         .HasForeignKey("AcceptorId");
 
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Sender")
-                        .WithMany("Suggests")
+                        .WithMany()
                         .HasForeignKey("SenderId");
                 });
 
-            modelBuilder.Entity("FaceBookProject.Models.Entity.UserMessage", b =>
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Suggest", b =>
                 {
-                    b.HasOne("FaceBookProject.Models.Entity.Message", "Message")
-                        .WithMany("UserMessages")
-                        .HasForeignKey("MessageId");
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "Acceptor")
+                        .WithMany("Suggests")
+                        .HasForeignKey("AcceptorId");
 
-                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
-                        .WithMany("UserMessages")
-                        .HasForeignKey("UserId1");
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

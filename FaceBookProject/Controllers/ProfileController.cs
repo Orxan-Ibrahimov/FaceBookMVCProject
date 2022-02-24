@@ -26,10 +26,10 @@ namespace FaceBookProject.Controllers
 
             ProfileVM profile = new ProfileVM
             {
-                SearchedUser = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).Include(u=>u.Suggests).ThenInclude(s => s.Sender).
-                Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u=>u.Id == id),
+                SearchedUser = _db.Users.Include(u=>u.Friends).ThenInclude(s => s.Friend).ThenInclude(f=>f.Friends).Include(u=>u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u=>u.Id == id),
                 User = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).ThenInclude(s => s.Sender).
-                Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name),
+                FirstOrDefault(u => u.UserName == User.Identity.Name),
                 MutualFriends = new List<AppUser>()
             };           
                  

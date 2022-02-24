@@ -24,7 +24,7 @@ namespace FaceBookProject.Controllers
         public IActionResult Index()
         {
             AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
-                Include(u=>u.Albums).ThenInclude(a=>a.Images).FirstOrDefault(u=>u.UserName == User.Identity.Name);
+              FirstOrDefault(u=>u.UserName == User.Identity.Name);
 
             if (user == null)
                 return NotFound();
@@ -43,7 +43,7 @@ namespace FaceBookProject.Controllers
                 return View();
 
             List<AppUser> users = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Suggests).ThenInclude(s => s.Sender).Where(u => u.UserName.Contains(search)).ToList();
-            AppUser user = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser user = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (users == null || user == null)
                 return NotFound();
@@ -62,8 +62,8 @@ namespace FaceBookProject.Controllers
             if (string.IsNullOrEmpty(id))
                 return View();
 
-            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.Id == id);
-            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Suggests).FirstOrDefault(u => u.Id == id);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (acceptor == null || sender == null)
                 return NotFound();
@@ -90,13 +90,13 @@ namespace FaceBookProject.Controllers
             if (string.IsNullOrEmpty(id))
                 return View();
 
-            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.Id == id);
-            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.Id == id);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (acceptor == null || sender == null)
                 return NotFound();
 
-            Suggest suggest = _db.Suggests.Include(s => s.Sender).Include(s => s.Acceptor).ThenInclude(a=>a.Albums).ThenInclude(a=>a.Images).FirstOrDefault(s=>s.AcceptorId == acceptor.Id && s.SenderId == sender.Id);
+            Suggest suggest = _db.Suggests.Include(s => s.Sender).Include(s => s.Acceptor).FirstOrDefault(s=>s.AcceptorId == acceptor.Id && s.SenderId == sender.Id);
 
             if (suggest == null)
                 return NotFound();
@@ -130,8 +130,8 @@ namespace FaceBookProject.Controllers
             if (string.IsNullOrEmpty(id))
                 return View();
 
-            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.Id == id);
-            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.Id == id);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (acceptor == null || sender == null)
                 return NotFound();
@@ -158,8 +158,8 @@ namespace FaceBookProject.Controllers
             if (string.IsNullOrEmpty(id))
                 return View();
 
-            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).Include(u=>u.Messages).FirstOrDefault(u => u.Id == id);
-            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u=>u.Messages).FirstOrDefault(u => u.Id == id);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (acceptor == null || sender == null)
                 return NotFound();
@@ -184,8 +184,8 @@ namespace FaceBookProject.Controllers
             if (string.IsNullOrEmpty(id))
                 return View();
 
-            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Albums).ThenInclude(a => a.Images).Include(u => u.Messages).FirstOrDefault(u => u.Id == id);
-            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).Include(u => u.Albums).ThenInclude(a => a.Images).FirstOrDefault(u => u.UserName == User.Identity.Name);
+            AppUser acceptor = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.Id == id);
+            AppUser sender = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).Include(u => u.Messages).FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (acceptor == null || sender == null)
                 return NotFound();

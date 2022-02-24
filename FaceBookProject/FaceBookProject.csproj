@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20220220202412_FirstMigration28.cs" />
-    <Compile Remove="Migrations\20220220202412_FirstMigration28.Designer.cs" />
-    <Compile Remove="Migrations\20220220203904_FirstMigration282.cs" />
-    <Compile Remove="Migrations\20220220203904_FirstMigration282.Designer.cs" />
-    <Compile Remove="Migrations\20220222121852_ChangeSuggestaTable2.cs" />
-    <Compile Remove="Migrations\20220222121852_ChangeSuggestaTable2.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.18">

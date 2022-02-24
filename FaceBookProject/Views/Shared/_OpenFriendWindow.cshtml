@@ -6,7 +6,7 @@
 <div class="chat">
     <div class="chat-header">
         <a href="" class="chat-header__profile p-2 text-white">
-            <img src="~/assets/img/@Model.Acceptor.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" width="30" height="30" class="rounded-circle" alt="chat" />
+            <img src="~/assets/img/@Model.Acceptor.Profile" width="30" height="30" class="rounded-circle" alt="chat" />
             <p class="mx-2 mb-0">@Model.Acceptor.FirstName @Model.Acceptor.LastName</p>
             <i class="fas fa-caret-down"></i>
         </a>
@@ -20,7 +20,7 @@
     </div>
     <div class="chat-body">
         <div class="chat-body__info">
-            <img src="~/assets/img/@Model.Acceptor.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" width="50" height="50" class="rounded-circle" alt="profile" />
+            <img src="~/assets/img/@Model.Acceptor.Profile" width="50" height="50" class="rounded-circle" alt="profile" />
             <h6 class="text-white my-2">@Model.Acceptor.FirstName @Model.Acceptor.LastName</h6>
             <small class="text-muted">Facebook</small>
             <small class="text-muted">Facebook'ta arkadassiniz</small>

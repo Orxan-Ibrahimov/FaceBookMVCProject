@@ -14,7 +14,7 @@
 else if (Model.Message.SenderId == Model.Acceptor.Id && Model.Message.AcceptorId == Model.Sender.Id)
 {
     <div class="message-come d-flex">
-        <img src="~/assets/img/avatar.jpg" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
+        <img src="~/assets/img/@Model.Sender.Profile" width="30" height="30" class="rounded-circle mx-2" alt="profile" />
         <p class="message">@Model.Message.Text</p>
     </div>
 }

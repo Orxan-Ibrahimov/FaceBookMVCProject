@@ -16,8 +16,6 @@ namespace FaceBookProject.Models.Entity
         [NotMapped]
         public IFormFile Photo { get; set; }
         public Album Album { get; set; }
-        public int? AlbumId { get; set; }
-        public bool IsProfilePhoto { get; set; }
-        public bool IsCoverPhoto { get; set; }
+        public int? AlbumId { get; set; }       
     }
 }

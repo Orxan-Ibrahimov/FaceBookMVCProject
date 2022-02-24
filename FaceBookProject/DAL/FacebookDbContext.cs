@@ -17,6 +17,8 @@ namespace FaceBookProject.DAL
         public DbSet<Suggest> Suggests { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Friendship> Friends { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<Image> Images { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

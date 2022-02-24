@@ -76,26 +76,27 @@ namespace FaceBookProject.Controllers
                 LastName = registerVM.LastName,
                 Birthday = registerVM.Birthday,
                 UserName = registerVM.Username,
-                Email = registerVM.Email
+                Email = registerVM.Email,
+                Profile = "default.jpg",                
             };
 
-            user.Albums = new List<Album> {
-                new Album{
-                Name = "Profile",
-                UserId = user.Id,
-                Images = new List<Image>
-                {
-                    new Image
-                    {
-                        Picture = "default.jpg"
-                    }
-                }
-                },
-                new Album{
-                Name = "Cover",
-                UserId = user.Id
-                }
-            };
+            //user.Albums = new List<Album> {
+            //    new Album{
+            //    Name = "Profile",
+            //    UserId = user.Id,
+            //    Images = new List<Image>
+            //    {
+            //        new Image
+            //        {
+            //            Picture = "default.jpg",
+            //        }
+            //    }
+            //    },
+            //    new Album{
+            //    Name = "Cover",
+            //    UserId = user.Id
+            //    }
+            //};
 
             IdentityResult result = await _userManager.CreateAsync(user,registerVM.Password);
 
@@ -105,14 +106,8 @@ namespace FaceBookProject.Controllers
                 {
                     ModelState.AddModelError("", item.Description);
                 }
-
                 return View(registerVM);
-            }
-
-          
-
-         
-
+            }      
             return View(nameof(Login));
         }
 
