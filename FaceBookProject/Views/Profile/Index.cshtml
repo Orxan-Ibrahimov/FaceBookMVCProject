@@ -82,13 +82,11 @@
             <div class="col-12 col-xl-8 offset-xl-2">
                 <div class="d-flex justify-content-between">
                     <ul class="facemenu-list">
-                        <li class="facemenu-list-item rounded">
-                            <a href="#"
-                               class="text-white">Gonderiler</a>
-                        </li>
                         <li class="facemenu-list-item rounded active">
-                            <a href="#"
-                               class="text-white">Hakkinda</a>
+                            <a href="#" class="text-white">Gonderiler</a>
+                        </li>
+                        <li class="facemenu-list-item rounded">
+                            <a id="about" data-id="@Model.SearchedUser.Id" class="text-white">Hakkinda</a>
                         </li>
                         <li class="facemenu-list-item rounded d-none d-md-block">
                             <a href="#"
@@ -149,7 +147,7 @@
     </div>
 </section>
 
-<section>
+<section id="orxan">
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-4 offset-xl-2">

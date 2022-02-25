@@ -10,8 +10,11 @@ let operations = document.querySelectorAll('.modal-operations');
 let profileOperations = document.querySelectorAll('.profile-operations');
 let coverOperations = document.querySelectorAll('.cover-operations');
 let exampleModal = document.querySelector('#exampleModal');
-let profileImage = document.querySelector('#profileImage');
+let profileImage = document.querySelector('#profileImage'); 
 let coverImage = document.querySelector('#coverImage');
+let about = document.querySelector('#about');
+let orxan = document.querySelector('#orxan');
+let container = document.querySelector('#orxan .container');
 //let message = document.querySelector('.chat-footer .textarea span');
 
 
@@ -21,7 +24,7 @@ window.addEventListener('load', function (params) {
     faceMenuListItems.forEach(faceMenuListItem => {
         faceMenuListItem.addEventListener('click', function (params) {
             let subfacemenu = faceMenuListItem.nextElementSibling;
-            if (subfacemenu.style.display != 'block')
+            if (subfacemenu?.style.display != 'block')
                 subfacemenu.style.display = 'block';
             else
                 subfacemenu.style.display = 'none';
@@ -34,6 +37,7 @@ window.addEventListener('load', function (params) {
             let userId = user.getAttribute('data-id');
             let parent = user.parentElement;
             user.remove();
+            console.log('ok');
             $.ajax({
                 url: `/Home/SendSuggest?id=${userId}`,
                 type: "Get",
@@ -134,7 +138,6 @@ window.addEventListener('load', function (params) {
 
         });
     });
-
  
     $(operations).each(function (index, element) {
         $(element).on('click', function () {
@@ -153,6 +156,23 @@ window.addEventListener('load', function (params) {
             $(coverImage).slideToggle("slow", "linear");
         });
     });
+
+    //about
+    $(about).on('click', function () {
+        let userId = about.getAttribute('data-id');
+        //about.preventDefault();
+        $(container).remove();
+
+        $.ajax({
+            url: `/Profile/ProfileAbout?id=${userId}`,
+            type: "Get",
+            success: function (response) {
+                console.log(response);
+                $(orxan).append(response);
+
+            }
+        });
+    });
    
 });
 
@@ -165,7 +185,25 @@ $(document).ajaxComplete(function () {
     let sendbtn = document.querySelector('#send');
     let chatBody = document.querySelector('.chat-body');
     let emoji = document.querySelector('.chat-footer #emoji');
+    let users = document.querySelectorAll('#sendSuggest');
 
+    // Send Suggest    
+    users.forEach(user => {
+        $(user).on('click', function () {
+            let userId = user.getAttribute('data-id');
+            let parent = user.parentElement;
+            user.remove();
+            console.log('ok');
+            $.ajax({
+                url: `/Home/SendSuggest?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(parent).append(response);
+                }
+            });
+
+        });
+    });
 
     message.addEventListener('focus', function (params) {
         //Send Message when user press Enter button at message input's onfocus     

@@ -121,6 +121,33 @@ namespace FaceBookProject.Controllers
             return View(nameof(Index), profileVM);
 
         }
+
+        public IActionResult ProfileAbout(string id)
+        {
+            if (id == null)
+                return NotFound();
+
+            ProfileVM profile = new ProfileVM
+            {
+                SearchedUser = _db.Users.Include(u => u.Friends).ThenInclude(s => s.Friend).ThenInclude(f => f.Friends).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u => u.Id == id),
+                User = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u => u.UserName == User.Identity.Name),
+                MutualFriends = new List<AppUser>()
+            };
+
+            if (profile.SearchedUser == null)
+                return NotFound();
+
+            foreach (var friendship in profile.SearchedUser.Friends)
+            {
+                if (profile.User.Friends.FirstOrDefault(f => f.Friend.Id == friendship.Friend.Id) != null)
+                    profile.MutualFriends.Add(friendship.Friend);
+            }
+
+            return View("_ProfileAbout", profile);
+        }
+        
         public string RenderImage(IFormFile photo)
         {
             if (!photo.ContentType.Contains("image"))
