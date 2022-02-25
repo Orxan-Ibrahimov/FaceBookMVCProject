@@ -4,8 +4,14 @@ let allFriends = document.querySelectorAll('#openChat');
 let users = document.querySelectorAll('#sendSuggest');
 let accepts = document.querySelectorAll('#accept'); 
 let regrets = document.querySelectorAll('#regret');
-let body = document.querySelectorAll('body');
-let emojiBox = document.querySelector('.chat-footer .emoji-container');
+let body = document.querySelectorAll('body'); 
+let emojiBox = document.querySelector('.chat-footer .emoji-container'); 
+let operations = document.querySelectorAll('.modal-operations');
+let profileOperations = document.querySelectorAll('.profile-operations');
+let coverOperations = document.querySelectorAll('.cover-operations');
+let exampleModal = document.querySelector('#exampleModal');
+let profileImage = document.querySelector('#profileImage');
+let coverImage = document.querySelector('#coverImage');
 //let message = document.querySelector('.chat-footer .textarea span');
 
 
@@ -93,6 +99,26 @@ window.addEventListener('load', function (params) {
 
         });
     });
+
+ 
+    $(operations).each(function (index, element) {
+        $(element).on('click', function () {
+            $(exampleModal).toggle("slow", "linear");
+        });
+    });
+
+    $(profileOperations).each(function (index, element) {
+        $(element).on('click', function () {
+            $(profileImage).slideToggle("slow", "linear");
+        });
+    });
+
+    $(coverOperations).each(function (index, element) {
+        $(element).on('click', function () {
+            $(coverImage).slideToggle("slow", "linear");
+        });
+    });
+   
 });
 
 
