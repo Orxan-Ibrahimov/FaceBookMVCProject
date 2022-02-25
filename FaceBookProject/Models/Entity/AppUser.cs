@@ -29,5 +29,6 @@ namespace FaceBookProject.Models.Entity
         public List<Suggest> Suggests { get; set; }
         public List<Message> Messages { get; set; }
         public List<Album> Albums { get; set; }
+        public List<UserHobby> UserHobbies { get; set; }
     }
 }

@@ -108,7 +108,7 @@ namespace FaceBookProject.Controllers
                 }
                 return View(registerVM);
             }      
-            return View(nameof(Login));
+            return RedirectToAction(nameof(Login),"Account");
         }
 
         public ActionResult Login()

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12 col-xl-8 offset-xl-2">
                 <div class="profile">
-                    <img src="~/assets/img/xaqani.jpg" class="w-100 h-100" alt="profile" />
+                    <img src="~/assets/img/@Model.SearchedUser.Cover" class="w-100 h-100" alt="profile" />
                 </div>
             </div>
         </div>
@@ -295,7 +295,7 @@
                         <small class="text-white">·</small>
                     </li>
                     <li>
-                        <small><a href="" class="text-white"> Diger </i></a></small>
+                        <small><a href="" class="text-white"> Diger</a></small>
                     </li>
                     <li class="px-1">
                         <small class="text-white"> · </small>
@@ -438,10 +438,10 @@
                                 <a class="btn btn-outline-success"><i class="fas fa-image"></i></a>
                             </label>
                         </div>
-                        <button asp-controller="Profile" asp-action="EditCoverImage" asp-route-id="@Model.SearchedUser.Id" type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button asp-controller="Profile" asp-action="EditCoverImage" asp-route-id="@Model.SearchedUser.Id" type="submit" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-secondary cover-operations">Close</button>
                 </div>
             </form>

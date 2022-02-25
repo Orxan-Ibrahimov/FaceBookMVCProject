@@ -178,13 +178,15 @@
                     <li></li>
                 </ul>
 
-                <ul>
+                <ul class="p-0" id="suggests">
                     @foreach (var suggest in Model.User.Suggests)
                     {
-                        <li>
-                            <div class="d-flex">
-                                @*<img src="~/assets/img/@suggest.Sender.Albums.FirstOrDefault(a=>a.Name == "Profile").Images.FirstOrDefault(i=>i.IsProfilePhoto).Picture" width="75" height="75" class="rounded-circle" alt="profile" />*@
-                                <div class="mx-2 w-100">
+                    <li>
+                        <div class="border border-light rounded px-2 py-3">
+                            <p class="text-white"><img src="~/assets/img/-XF4FQcre_i.png" width="25" height="25" class="rounded-circle" alt=""> Arkadaslik istekleri</p>
+                            <div class="d-flex align-items-center">
+                                <img src="~/assets/img/@suggest.Sender.Profile" width="75" height="75" class="rounded-circle" alt="profile" />
+                                <div class="mx-2">
                                     <div class="d-flex justify-content-between w-100">
                                         <p class="text-white">@suggest.Sender.FirstName @suggest.Sender.LastName</p>
                                         <p class="text-muted">@(((DateTime.Now - suggest.CreatedDate).Days > 0) ? (suggest.CreatedDate.ToString("dd.MM.yyyy")):(suggest.CreatedDate.ToString("HH:mm")))</p>
@@ -195,7 +197,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </div>
+                    </li>
                     }
                 </ul>
 

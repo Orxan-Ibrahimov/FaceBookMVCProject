@@ -49,14 +49,37 @@ window.addEventListener('load', function (params) {
     accepts.forEach(accept => {
         $(accept).on('click', function () {
             let userId = accept.getAttribute('data-id');
-            //let parent = user.parentElement;
-            //user.remove();
-            //console.log(parent);
+            let parent = accept.parentElement;
+            let childs = parent.childNodes;
+
+            $(childs).each(function (index, child) {
+                child.remove();
+            });
+
+            const myTimeout = setTimeout(RemoveList, 2000);
+
+            function RemoveList() {
+                let suggests = parent.parentElement.parentElement.parentElement.parentElement;
+                if (suggests.parentElement.getAttribute('id') == "suggests") {
+                    suggests.remove();
+                }                               
+            }
+
+            let p = document.createElement('p');
+            p.textContent = "Teklifi kabul ettiniz";
+            p.classList.add('text-success');
+            p.classList.add('fw-bold');
+            parent.append(p);
+
             $.ajax({
                 url: `/Home/AcceptSuggest?id=${userId}`,
                 type: "Get",
                 success: function (response) {
-                    $(parent).append(response);
+                    $(friends).each(function (index, child) {
+                        child.remove();
+                    });
+                    $('#friends').append(response);
+                   
                 }
             });
 
@@ -67,9 +90,21 @@ window.addEventListener('load', function (params) {
     regrets.forEach(regret => {
         $(regret).on('click', function () {
             let userId = regret.getAttribute('data-id');
-            //let parent = user.parentElement;
-            //user.remove();
-            //console.log(parent);
+            let parent = regret.parentElement;
+            let childs = parent.childNodes;
+            $(childs).each(function (index, child) {                
+                child.remove();
+            });               
+            const myTimeout = setTimeout(RemoveList, 2000);
+
+            function RemoveList() {
+                let suggests = parent.parentElement.parentElement.parentElement.parentElement;
+                if (suggests.parentElement.getAttribute('id') == "suggests") {
+                    suggests.remove();
+                }
+            }
+
+
             $.ajax({
                 url: `/Home/RegretSuggest?id=${userId}`,
                 type: "Get",
