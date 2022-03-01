@@ -10,5 +10,6 @@ namespace FaceBookProject.ViewModels
     {
         public List<Behavior> Behaviors { get; set; }
         public Behavior Behavior { get; set; }
+        public string Search { get; set; }
     }
 }

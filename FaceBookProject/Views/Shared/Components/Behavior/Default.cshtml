@@ -16,11 +16,11 @@
                 <form enctype="multipart/form-data" method="post">
                     <div class="form-row">
                         <div class="col-12 mb-3">
-                            @*<input asp-for="SearchedUser.ProfilePhoto" hidden class="form-control" />*@
+                            <input id="searchEmotion" class="form-control" />
                         </div>
                     </div>
                 </form>
-                <ul class="row facemenu-list">
+                <ul class="row facemenu-list">                    
                     @foreach (var behavior in Model.Behaviors)
                     {
                         <li class="col-6 facemenu-list-item px-2">

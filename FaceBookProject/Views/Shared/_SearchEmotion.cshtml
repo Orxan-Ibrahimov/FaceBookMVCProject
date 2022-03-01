@@ -1,0 +1,13 @@
+﻿@model EmotionVM
+@{
+    Layout = null;
+}
+
+@foreach (var behavior in Model.Behaviors)
+{
+    <li class="col-6 facemenu-list-item px-2">
+        <a href="" class="feelingBtn text-white" data-id="@behavior.Id">
+            <img src="~/assets/img/emotions/@behavior.Icon" width="20" height="20" class="emotion-icon" /> <span class="feeling mx-4">@behavior.Text</span>
+        </a>
+    </li>
+}

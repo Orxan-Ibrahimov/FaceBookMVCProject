@@ -298,6 +298,16 @@ namespace FaceBookProject.Controllers
             return View("_AddEmotion", emotionVM);
         }
 
-    }
+        public IActionResult SearchEmotion(string search)
+        {
+            EmotionVM emotionVM = new EmotionVM
+            {
+                Behaviors = _db.Behaviors.ToList()
+        };
+            if (search != null)
+                emotionVM.Behaviors = emotionVM.Behaviors.Where(b => b.Text.Contains(search)).ToList();
 
+            return View("_SearchEmotion", emotionVM);
+        }
+    }
 }

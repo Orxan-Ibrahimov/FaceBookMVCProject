@@ -17,12 +17,14 @@ let orxan = document.querySelector('#orxan');
 let container = document.querySelector('#orxan .container');
 let StoryWindowBtns = document.querySelectorAll('.openStoryWindow'); 
 let storyBox = document.querySelector('#storyBox');
-let addEmoji = document.querySelector('#addEmoji'); 
+let addEmoji = document.querySelector('#addEmoji');
 let storyMessage = document.querySelector('#storyBox textarea');
 let emotions = document.querySelector('#emotions'); 
 let emotionOpen = document.querySelectorAll('.emotion-open'); 
 let howFeel = document.querySelector('#howFeel');
-let feelingBtns = document.querySelectorAll('.feelingBtn');
+let feelingBtns = document.querySelectorAll('.feelingBtn'); 
+let searchEmotion = document.querySelector('#emotions #searchEmotion');
+let emotionItems = document.querySelectorAll('#emotions .facemenu-list .facemenu-list-item');
 //let message = document.querySelector('.chat-footer .textarea span');
 
 
@@ -197,8 +199,8 @@ window.addEventListener('load', function (params) {
             addEmoji.parentElement.querySelector('.emoji-container').remove();
     };
 
-    $(emotionOpen).each(function (index, element) {        
-        $(element).on('click', function (params) {
+    $(emotionOpen).each(function (index, element) {
+        $(element).unbind().on('click', function (params) {
             params.preventDefault();
 
             $(storyBox).slideToggle("slow", "linear");
@@ -207,7 +209,7 @@ window.addEventListener('load', function (params) {
     });
 
     $(feelingBtns).each(function (index, element) {
-        $(element).on('click', function (params) {
+        $(element).unbind().on('click', function (params) {
             params.preventDefault();
             /*$(element).parent().remove();*/
 
@@ -215,8 +217,6 @@ window.addEventListener('load', function (params) {
                 $(element).remove()
             });
 
-
-            console.log($(element).parent())
             $(storyBox).slideToggle("slow", "linear");
             $(emotions).slideToggle("slow", "linear");
 
@@ -230,6 +230,27 @@ window.addEventListener('load', function (params) {
                 }
             });
         });
+    });
+
+    $(searchEmotion).on('focus', function (params) {
+        //Send Message when user press Enter button at message input's onfocus     
+        searchEmotion.onkeyup = function (event) {
+            event.preventDefault();
+            $(emotionItems).each(function (index, element) {
+                $(element).remove();
+            });
+
+            let search = searchEmotion.value;
+
+                    $.ajax({
+                        url: `/Home/SearchEmotion?search=${search}`,
+                        type: "Get",
+                        success: function (response) {                            
+                            $('#emotions .facemenu-list').append(response);
+                        }
+                    });               
+            
+        }
     });
     
 });
@@ -248,7 +269,22 @@ $(document).ajaxComplete(function () {
     let allFriendItems = document.querySelectorAll('#allFriends li');
     let mutualFriendsLink = document.querySelector('#mutual-friends a');
     let allFriends = document.querySelectorAll('#openChat');
+    let emotions = document.querySelector('#emotions');
+    let emotionOpen = document.querySelectorAll('.emotion-open'); 
+    let storyBox = document.querySelector('#storyBox');
+    let searchEmotion = document.querySelector('#emotions #searchEmotion');
+    let emotionItems = document.querySelectorAll('#emotions .facemenu-list .facemenu-list-item');
+    let howFeel = document.querySelector('#howFeel');
+    let feelingBtns = document.querySelectorAll('.feelingBtn');
 
+    $(emotionOpen).each(function (index, element) {
+        $(element).unbind().on('click', function (params) {
+            params.preventDefault();
+
+            $(storyBox).slideToggle("slow", "linear");
+            $(emotions).slideToggle("slow", "linear");
+        });
+    });
 
     $(mutualFriendsLink).on('click', function () {
         let userId = mutualFriendsLink.getAttribute('data-id');
@@ -284,26 +320,52 @@ $(document).ajaxComplete(function () {
         };
     });
 
-    message.addEventListener('focus', function (params) {
-        //Send Message when user press Enter button at message input's onfocus     
-        message.onkeypress = function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                let userId = sendbtn.getAttribute('data-id');
-                let text = message.textContent;
+    searchEmotion.onkeyup = function (event) {
+        event.preventDefault();
+        console.log(emotionItems)
+        $(emotionItems).each(function (index, element) {
+            $(element).remove();
+        });
 
-                if (message.textContent.length != 0) {
-                    $.ajax({
-                        url: `/Home/SendMessage?id=${userId}&message=${text}`,
-                        type: "Get",
-                        success: function (response) {
-                            message.textContent = null;
-                            $(chatBody).append(response);
-                        }
-                    });
-                }
+        let search = searchEmotion.value;
+
+        $.ajax({
+            url: `/Home/SearchEmotion?search=${search}`,
+            type: "Get",
+            success: function (response) {
+                $('#emotions .facemenu-list').append(response);
             }
-        }
+        });
+
+    }
+
+    //$(searchEmotion).unbind().on('focus', function (params) {
+    //    //Send Message when user press Enter button at message input's onfocus     
+        
+    //});
+
+    $(feelingBtns).each(function (index, element) {
+        $(element).unbind().on('click', function (params) {
+            params.preventDefault();
+            /*$(element).parent().remove();*/
+
+            $('#howFeel *').each(function (index, element) {
+                $(element).remove()
+            });
+
+            $(storyBox).slideToggle("slow", "linear");
+            $(emotions).slideToggle("slow", "linear");
+
+            let userId = element.getAttribute('data-id');
+
+            $.ajax({
+                url: `/Home/AddEmotion?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(howFeel).append(response);
+                }
+            });
+        });
     });
 
     allFriends.forEach(friend => {
@@ -359,6 +421,27 @@ $(document).ajaxComplete(function () {
             emoji.parentElement.querySelector('.emoji-container').remove();
     };
 
+    message.addEventListener('focus', function (params) {
+        //Send Message when user press Enter button at message input's onfocus     
+        message.onkeypress = function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                let userId = sendbtn.getAttribute('data-id');
+                let text = message.textContent;
+
+                if (message.textContent.length != 0) {
+                    $.ajax({
+                        url: `/Home/SendMessage?id=${userId}&message=${text}`,
+                        type: "Get",
+                        success: function (response) {
+                            message.textContent = null;
+                            $(chatBody).append(response);
+                        }
+                    });
+                }
+            }
+        }
+    });
 
 });
 
