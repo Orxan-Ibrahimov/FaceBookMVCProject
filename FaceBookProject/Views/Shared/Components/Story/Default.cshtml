@@ -1,0 +1,53 @@
+﻿@model StoryBoxVM
+@{
+    Layout = null;
+}
+
+<!-- Story Box -->
+<div class="modal" id="storyBox">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gönderi Oluştur</h5>
+                <a class="openStoryWindow btn btn-outline-danger"><i class="fas fa-times"></i></a>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="d-flex align-items-center w-100 my-3">
+                        <a class="btn"><img src="~/assets/img/@Model.User.Profile" width="50" height="50" class="rounded-circle" alt="profile" /></a>
+                        <p>
+                            @Model.User.FirstName @Model.User.LastName,
+                            <span class="text-white" id="howFeel">
+                                @*<label asp-for="Story.Emotion">
+                                    <input />
+                                </label>*@
+                            </span>
+                        </p>
+                    </div>
+                    <div class="d-flex flex-column align-items-end">
+                        <textarea asp-for="Story.Header" class="form-control bg-transparent border-0 text-white isTextarea" rows="5" placeholder="Ne dusunuyorsun, @Model.User.UserName?"></textarea>
+                        <div class="position-relative w-100 d-flex justify-content-end">
+                            <a class="btn btn-outline-warning border-0 p-0 rounded-circle my-2" id="addEmoji"><i class="fas fa-smile fa-2x"></i></a>
+                        </div>
+                        <img src="~/assets/img/1.jpg" />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center border px-3 py-2 mt-3 rounded">
+                        <a href="" class="text-white">Gonderine Ekle</a>
+                        <div>
+                            <label asp-for="Story.Photo">
+                                <input asp-for="Story.Photo" hidden />
+                                <a class="mx-1 btn"><span class="text-success"><i class="fas fa-images fa-2x"></i></span></a>
+                            </label>
+                            <a href="" class="mx-1"><span class="text-primary"><i class="fas fa-user-tag fa-2x"></i></span></a>
+                            <a class="mx-1 btn emotion-open"><span class="text-warning"><i class="fas fa-smile fa-2x"></i></span></a>
+                            <a href="" class="mx-1"><i class="fas fa-location-dot fa-2x"></i></a>
+                            <a href="" class="mx-1"><span class="text-danger"><i class="fas fa-microphone fa-2x"></i></span></a>
+                        </div>
+                    </div>
+                    <button type="submit" asp-controller="Home" asp-action="SendStory" class="btn btn-primary w-100">Send</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

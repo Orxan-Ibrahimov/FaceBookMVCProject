@@ -104,70 +104,90 @@
             </div>
             <div class="col-12 col-lg-9 col-xl-6" style="max-height: 100vh; overflow-y: auto;">
                 <div class="story">
-                    <div class="story-header d-flex">
-                        <img class="rounded-circle" src="~/assets/img/sumgait-logo.jpg">
-                        <div class="mx-2">
-                            <h6 class="text-white">Sumgayit 24</h6>
-                            <a href="" class="text-muted">sponsorlu</a>
-                        </div>
+                    <div class="d-flex align-items-center border-bottom">
+                        <a href="" class="story-image">
+                            <img src="~/assets/img/avatar.jpg" alt="profile" width="50" height="50"
+                                 class="rounded-circle" />
+                        </a>
+                        <a class="btn w-100 openStoryWindow">
+                            <input type="text" placeholder="Ne dusunuyorsun, Orxan?" class="rounded-pill w-100 m-3 p-2 border-0" />
+                        </a>
                     </div>
-                    <div class="story-text">
-                        <p class="text-white">
-                            Sumqayıtda baş verən bütün xəbərlərdən məlumat almaq istəyirsiniz?
-                            Onda səhifəmizə
-                            abunə olun!
-                        </p>
-                    </div>
+                    <ul class="d-flex justify-content-around p-0 my-3">
+                        <li>
+                            <a href="" class="d-flex p-3 align-items-center rounded">
+                                <i class="fas fa-images text-success mx-2"></i>
+                                <p class="text-white my-0 mx-2">Fotograf/video</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="d-flex p-3 align-items-center rounded">
+                                <i class="fas fa-user-tag text-primary"></i>
+                                <p class="text-white my-0 mx-2">Fotograf/video</p>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="story">
-                    <div class="story-header d-flex">
-                        <img class="rounded-circle" src="~/assets/img/marvel-logo.jpg">
-                        <div class="mx-2">
-                            <h6 class="text-white">Marvel Studios</h6>
-                            <a href="" class="text-muted">Danny L Baker</a>
-                            <a href="" class="text-muted">8 Ocak,21:12</a>
-                            <i class="fas fa-caret-down"></i>
-                        </div>
-                    </div>
-                    <div class="story-text">
-                        <p class="text-white">
-                            This is why I don’t spoil anything in this page unlike some dumb
-                            people. Hope everyone in Philippine enjoys the movie
-                        </p>
-                    </div>
-                    <div class="story-image">
-                        <img src="~/assets/img/spiderman.jpg" class="w-100" alt="" />
-                    </div>
-                    <div class="story-details">
-                        <div class="d-flex justify-content-between">
-                            <a href=""><i class="fas fa-thumbs-up"></i> 1,9B</a>
-                            <div class="comment-count d-flex">
-                                <a href="" class="text-muted">508 Yorum</a>
-                                <a href="" class="text-muted">18 Paylasim</a>
+                @foreach (var story in Model.User.Stories)
+                {
+                    <div class="story my-3">
+                        <div class="story-header d-flex align-items-center">
+                            <img class="rounded-circle" src="~/assets/img/@Model.User.Profile" width="50" height="50" alt="profile" />
+                            <div class="mx-2">
+                                <h6 class="text-white">
+                                    @Model.User.UserName
+                                    @if (story.Emotion != null)
+                                    {
+                                    <span class="text-muted">
+                                        is
+                                        <img src="~/assets/img/emotions/@story.Emotion.Icon" width="20" height="20" class="emotion-icon" /> feeling @story.Emotion.Text
+                                    </span>
+                            }
+
+                                </h6>
+                                <a href="" class="text-muted">@*Danny L Baker*@</a>
+                                <a href="" class="text-muted">@story.CreatedDate.ToString("dd MMMM, HH:mm")</a>
+                                <i class="fas fa-caret-down"></i>
                             </div>
                         </div>
+                        <div class="story-text my-2">
+                            <p class="text-white">@story.Header</p>
+                        </div>
+
+                        <div class="story-image">
+                            <img src="~/assets/img/@story.Image" class="w-100 my-3" alt="image" />
+                        </div>
+                        <div class="story-details">
+                            <div class="d-flex justify-content-between">
+                                <a href=""><i class="fas fa-thumbs-up"></i> 1,9B</a>
+                                <div class="comment-count d-flex">
+                                    <a href="" class="text-muted">508 Yorum</a>
+                                    <a href="" class="text-muted">18 Paylasim</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-footer my-3">
+                            <ul class="row">
+                                <li class="col-4">
+                                    <a href="" class="text-muted d-block text-center">
+                                        <i class="far fa-thumbs-up"></i> Begen
+                                    </a>
+                                </li>
+                                <li class="col-4">
+                                    <a href="" class="text-muted d-block text-center">
+                                        <i class="fas fa-comment-dots"></i> Yorum Yap
+                                    </a>
+                                </li>
+                                <li class="col-4">
+                                    <a href="" class="text-muted d-block text-center">
+                                        <i class="fas fa-share"></i> Paylas
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="story-footer my-3">
-                        <ul class="row">
-                            <li class="col-4">
-                                <a href="" class="text-muted d-block text-center">
-                                    <i class="far fa-thumbs-up"></i> Begen
-                                </a>
-                            </li>
-                            <li class="col-4">
-                                <a href="" class="text-muted d-block text-center">
-                                    <i class="fas fa-comment-dots"></i> Yorum Yap
-                                </a>
-                            </li>
-                            <li class="col-4">
-                                <a href="" class="text-muted d-block text-center">
-                                    <i class="fas fa-share"></i> Paylas
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                }
             </div>
 
             <div class="col-3 d-none d-lg-block" style="max-height: 100vh; overflow-y: auto;">
@@ -181,24 +201,24 @@
                 <ul class="p-0" id="suggests">
                     @foreach (var suggest in Model.User.Suggests)
                     {
-                    <li>
-                        <div class="border border-light rounded px-2 py-3">
-                            <p class="text-white"><img src="~/assets/img/-XF4FQcre_i.png" width="25" height="25" class="rounded-circle" alt=""> Arkadaslik istekleri</p>
-                            <div class="d-flex align-items-center">
-                                <img src="~/assets/img/@suggest.Sender.Profile" width="75" height="75" class="rounded-circle" alt="profile" />
-                                <div class="mx-2">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <p class="text-white">@suggest.Sender.FirstName @suggest.Sender.LastName</p>
-                                        <p class="text-muted">@(((DateTime.Now - suggest.CreatedDate).Days > 0) ? (suggest.CreatedDate.ToString("dd.MM.yyyy")):(suggest.CreatedDate.ToString("HH:mm")))</p>
-                                    </div>
-                                    <div class="d-flex w-100">
-                                        <a id="accept" data-id="@suggest.Sender.Id" class="btn px-4 me-2 btn-primary">Onayla</a>
-                                        <a id="regret" data-id="@suggest.Sender.Id" class="btn px-4 ms-2 btn-secondary">Sil</a>
+                        <li>
+                            <div class="border border-light rounded px-2 py-3">
+                                <p class="text-white"><img src="~/assets/img/-XF4FQcre_i.png" width="25" height="25" class="rounded-circle" alt=""> Arkadaslik istekleri</p>
+                                <div class="d-flex align-items-center">
+                                    <img src="~/assets/img/@suggest.Sender.Profile" width="75" height="75" class="rounded-circle" alt="profile" />
+                                    <div class="mx-2">
+                                        <div class="d-flex justify-content-between w-100">
+                                            <p class="text-white">@suggest.Sender.FirstName @suggest.Sender.LastName</p>
+                                            <p class="text-muted">@(((DateTime.Now - suggest.CreatedDate).Days > 0) ? (suggest.CreatedDate.ToString("dd.MM.yyyy")):(suggest.CreatedDate.ToString("HH:mm")))</p>
+                                        </div>
+                                        <div class="d-flex w-100">
+                                            <a id="accept" data-id="@suggest.Sender.Id" class="btn px-4 me-2 btn-primary">Onayla</a>
+                                            <a id="regret" data-id="@suggest.Sender.Id" class="btn px-4 ms-2 btn-secondary">Sil</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
                     }
                 </ul>
 
@@ -264,3 +284,37 @@
         </div>
     </div>
 </section>
+
+
+@await Component.InvokeAsync("Story")
+
+@await Component.InvokeAsync("Behavior");
+
+
+<!-- Cover Edit -->
+<!--<div class="modal" id="coverImage">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">Kapak Resmini Güncelle</h5>
+                <a class="cover-operations btn btn-outline-light"><i class="fas fa-times"></i></a>
+            </div>
+            <form enctype="multipart/form-data" method="post">
+                <div class="modal-body" id="editprofile">
+                    <div class="form-row">
+                        <div class="col-12 mb-3">
+                            <label>
+                                <input asp-for="SearchedUser.CoverPhoto" hidden class="form-control" />
+                                <a class="btn btn-outline-success"><i class="fas fa-image"></i></a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button asp-controller="Profile" asp-action="EditCoverImage" asp-route-id="" type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary cover-operations">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->

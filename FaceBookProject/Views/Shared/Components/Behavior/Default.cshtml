@@ -1,0 +1,37 @@
+﻿@model EmotionVM
+@{
+    Layout = null;
+}
+
+<!-- Emotion -->
+<div class="modal" id="emotions">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title">How are you feeling?</h5>
+                <a class="btn btn-outline-light emotion-open"><i class="fas fa-times"></i></a>
+            </div>
+
+            <div class="modal-body scroll-appeareance" style="max-height:300px; overflow-y:auto;">
+                <form enctype="multipart/form-data" method="post">
+                    <div class="form-row">
+                        <div class="col-12 mb-3">
+                            @*<input asp-for="SearchedUser.ProfilePhoto" hidden class="form-control" />*@
+                        </div>
+                    </div>
+                </form>
+                <ul class="row facemenu-list">
+                    @foreach (var behavior in Model.Behaviors)
+                    {
+                        <li class="col-6 facemenu-list-item px-2">
+                            <a href="" class="feelingBtn text-white" data-id="@behavior.Id">
+                                <img src="~/assets/img/emotions/@behavior.Icon" width="20" height="20" class="emotion-icon" /> <span class="feeling mx-4">@behavior.Text</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>

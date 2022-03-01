@@ -1,5 +1,6 @@
 ﻿
 using FaceBookProject.DAL;
+using FaceBookProject.Helpers.Methods;
 using FaceBookProject.Models.Entity;
 using FaceBookProject.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -32,13 +33,13 @@ namespace FaceBookProject.Controllers
 
             ProfileVM profile = new ProfileVM
             {
-                SearchedUser = _db.Users.Include(u=>u.Friends).ThenInclude(s => s.Friend).ThenInclude(f=>f.Friends).Include(u=>u.Suggests).ThenInclude(s => s.Sender).
-                FirstOrDefault(u=>u.Id == id),
+                SearchedUser = _db.Users.Include(u => u.Friends).ThenInclude(s => s.Friend).ThenInclude(f => f.Friends).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u => u.Id == id),
                 User = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).ThenInclude(s => s.Sender).
                 FirstOrDefault(u => u.UserName == User.Identity.Name),
                 MutualFriends = new List<AppUser>()
-            };           
-                 
+            };
+
             if (profile.SearchedUser == null)
                 return NotFound();
 
@@ -52,7 +53,7 @@ namespace FaceBookProject.Controllers
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult EditProfileImage(string id,ProfileVM profile)
+        public IActionResult EditProfileImage(string id, ProfileVM profile)
         {
             if (id == null)
                 return View();
@@ -77,8 +78,9 @@ namespace FaceBookProject.Controllers
 
             if (ModelState["SearchedUser.ProfilePhoto"].ValidationState == ModelValidationState.Invalid)
                 return View(profile);
-            string filename = RenderImage(profile.SearchedUser.ProfilePhoto);
-           
+            Methods method = new Methods(_env);
+            string filename = method.RenderImage(profile.SearchedUser.ProfilePhoto);
+
 
             profileVM.SearchedUser.Profile = filename;
             _db.SaveChanges();
@@ -86,7 +88,6 @@ namespace FaceBookProject.Controllers
             return View(nameof(Index), profileVM);
 
         }
-
         public IActionResult EditCoverImage(string id, ProfileVM profile)
         {
             if (id == null)
@@ -112,7 +113,8 @@ namespace FaceBookProject.Controllers
 
             if (ModelState["SearchedUser.CoverPhoto"].ValidationState == ModelValidationState.Invalid)
                 return View(profile);
-            string filename = RenderImage(profile.SearchedUser.CoverPhoto);
+            Methods method = new Methods(_env);
+            string filename = method.RenderImage(profile.SearchedUser.CoverPhoto);
 
 
             profileVM.SearchedUser.Cover = filename;
@@ -121,7 +123,6 @@ namespace FaceBookProject.Controllers
             return View(nameof(Index), profileVM);
 
         }
-
         public IActionResult ProfileAbout(string id)
         {
             if (id == null)
@@ -147,35 +148,31 @@ namespace FaceBookProject.Controllers
 
             return View("_ProfileAbout", profile);
         }
-        
-        public string RenderImage(IFormFile photo)
+        public IActionResult MutualFriends(string id)
         {
-            if (!photo.ContentType.Contains("image"))
-            {
-                return null;
-            }
-            if (photo.Length / 1024 > 10000)
-            {
-                return null;
-            }
+            if (id == null)
+                return NotFound();
 
-            string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
-            string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "assets", "img");
-
-
-            if (!Directory.Exists(newSlider))
+            ProfileVM profile = new ProfileVM
             {
-                Directory.CreateDirectory(newSlider);
-            }
-            newSlider = Path.Combine(newSlider, filename);
+                SearchedUser = _db.Users.Include(u => u.Friends).ThenInclude(s => s.Friend).ThenInclude(f => f.Friends).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u => u.Id == id),
+                User = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+                FirstOrDefault(u => u.UserName == User.Identity.Name),
+                MutualFriends = new List<AppUser>()
+            };
 
-            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            if (profile.SearchedUser == null)
+                return NotFound();
+
+            foreach (var friendship in profile.SearchedUser.Friends)
             {
-                photo.CopyTo(file);
+                if (profile.User.Friends.FirstOrDefault(f => f.Friend.Id == friendship.Friend.Id) != null)
+                    profile.MutualFriends.Add(friendship.Friend);
             }
 
-            return filename;
+            return View("_MutualFriends", profile);
         }
+
     }
 }

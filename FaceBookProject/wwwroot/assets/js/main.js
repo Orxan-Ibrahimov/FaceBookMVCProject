@@ -13,8 +13,16 @@ let exampleModal = document.querySelector('#exampleModal');
 let profileImage = document.querySelector('#profileImage'); 
 let coverImage = document.querySelector('#coverImage');
 let about = document.querySelector('#about');
-let orxan = document.querySelector('#orxan');
+let orxan = document.querySelector('#orxan'); 
 let container = document.querySelector('#orxan .container');
+let StoryWindowBtns = document.querySelectorAll('.openStoryWindow'); 
+let storyBox = document.querySelector('#storyBox');
+let addEmoji = document.querySelector('#addEmoji'); 
+let storyMessage = document.querySelector('#storyBox textarea');
+let emotions = document.querySelector('#emotions'); 
+let emotionOpen = document.querySelectorAll('.emotion-open'); 
+let howFeel = document.querySelector('#howFeel');
+let feelingBtns = document.querySelectorAll('.feelingBtn');
 //let message = document.querySelector('.chat-footer .textarea span');
 
 
@@ -23,6 +31,9 @@ window.addEventListener('load', function (params) {
     // submenu's open/close operation at faceMenulist
     faceMenuListItems.forEach(faceMenuListItem => {
         faceMenuListItem.addEventListener('click', function (params) {
+            $(faceMenuListItems).each(function (index, element) {
+                element.parentElement.classList.remove('active');
+            });
             let subfacemenu = faceMenuListItem.nextElementSibling;
             if (subfacemenu?.style.display != 'block')
                 subfacemenu.style.display = 'block';
@@ -32,26 +43,27 @@ window.addEventListener('load', function (params) {
     });
 
     // Send Suggest    
-    users.forEach(user => {        
-        $(user).on('click', function () {
+    users.forEach(user => {
+        user.onclick = function (params) {
+            params.preventDefault();
             let userId = user.getAttribute('data-id');
             let parent = user.parentElement;
             user.remove();
-            console.log('ok');
+            console.log(user);
             $.ajax({
                 url: `/Home/SendSuggest?id=${userId}`,
                 type: "Get",
                 success: function (response) {
-                    $(parent).append(response);                    
+                    $(parent).append(response);
                 }
             });
 
-        });
+        };
     });
 
     // Accept Suggest    
     accepts.forEach(accept => {
-        $(accept).on('click', function () {
+        accept.onclick = function () {
             let userId = accept.getAttribute('data-id');
             let parent = accept.parentElement;
             let childs = parent.childNodes;
@@ -66,7 +78,7 @@ window.addEventListener('load', function (params) {
                 let suggests = parent.parentElement.parentElement.parentElement.parentElement;
                 if (suggests.parentElement.getAttribute('id') == "suggests") {
                     suggests.remove();
-                }                               
+                }
             }
 
             let p = document.createElement('p');
@@ -78,27 +90,23 @@ window.addEventListener('load', function (params) {
             $.ajax({
                 url: `/Home/AcceptSuggest?id=${userId}`,
                 type: "Get",
-                success: function (response) {
-                    $(friends).each(function (index, child) {
-                        child.remove();
-                    });
+                success: function (response) {                  
                     $('#friends').append(response);
-                   
                 }
             });
 
-        });
+        }
     });
     
     // Regret Suggest    
     regrets.forEach(regret => {
-        $(regret).on('click', function () {
+        regret.onclick = function () {
             let userId = regret.getAttribute('data-id');
             let parent = regret.parentElement;
             let childs = parent.childNodes;
-            $(childs).each(function (index, child) {                
+            $(childs).each(function (index, child) {
                 child.remove();
-            });               
+            });
             const myTimeout = setTimeout(RemoveList, 2000);
 
             function RemoveList() {
@@ -117,11 +125,11 @@ window.addEventListener('load', function (params) {
                 }
             });
 
-        });
+        }
     });
 
     allFriends.forEach(friend => {
-        $(friend).on('click', function () {
+        friend.onclick = function () {
             if ($('.chat')) {
                 $('.chat').remove();
             }
@@ -136,7 +144,7 @@ window.addEventListener('load', function (params) {
                 }
             });
 
-        });
+        }
     });
  
     $(operations).each(function (index, element) {
@@ -160,6 +168,7 @@ window.addEventListener('load', function (params) {
     //about
     $(about).on('click', function () {
         let userId = about.getAttribute('data-id');
+        about.parentElement.classList.add('active');
         //about.preventDefault();
         $(container).remove();
 
@@ -167,13 +176,62 @@ window.addEventListener('load', function (params) {
             url: `/Profile/ProfileAbout?id=${userId}`,
             type: "Get",
             success: function (response) {
-                console.log(response);
                 $(orxan).append(response);
-
             }
         });
     });
-   
+
+    $(StoryWindowBtns).each(function (index, element) {
+        $(element).unbind().on('click', function (params) {
+            $(storyBox).slideToggle("slow", "linear");
+        });
+    });  
+
+    addEmoji.onclick = function (event) {
+        event.preventDefault();
+
+        let emojiList = CreateEmojiList(storyMessage);
+        if (addEmoji.parentElement.querySelector('.emoji-container') == null)
+            addEmoji.parentElement.appendChild(emojiList);
+        else
+            addEmoji.parentElement.querySelector('.emoji-container').remove();
+    };
+
+    $(emotionOpen).each(function (index, element) {        
+        $(element).on('click', function (params) {
+            params.preventDefault();
+
+            $(storyBox).slideToggle("slow", "linear");
+            $(emotions).slideToggle("slow", "linear");
+        });
+    });
+
+    $(feelingBtns).each(function (index, element) {
+        $(element).on('click', function (params) {
+            params.preventDefault();
+            /*$(element).parent().remove();*/
+
+            $('#howFeel *').each(function (index, element) {
+                $(element).remove()
+            });
+
+
+            console.log($(element).parent())
+            $(storyBox).slideToggle("slow", "linear");
+            $(emotions).slideToggle("slow", "linear");
+
+            let userId = element.getAttribute('data-id');
+            
+            $.ajax({
+                url: `/Home/AddEmotion?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(howFeel).append(response);
+                }
+            });
+        });
+    });
+    
 });
 
 
@@ -186,14 +244,35 @@ $(document).ajaxComplete(function () {
     let chatBody = document.querySelector('.chat-body');
     let emoji = document.querySelector('.chat-footer #emoji');
     let users = document.querySelectorAll('#sendSuggest');
+    let allFriendsAtProfile = document.querySelector('#allFriends');
+    let allFriendItems = document.querySelectorAll('#allFriends li');
+    let mutualFriendsLink = document.querySelector('#mutual-friends a');
+    let allFriends = document.querySelectorAll('#openChat');
+
+
+    $(mutualFriendsLink).on('click', function () {
+        let userId = mutualFriendsLink.getAttribute('data-id');
+
+        $(allFriendItems).each(function (index, element) {
+            $(element).remove();
+        });
+        $.ajax({
+            url: `/Profile/MutualFriends?id=${userId}`,
+            type: "Get",
+            success: function (response) {
+                $(allFriendsAtProfile).append(response);
+            }
+        });
+    });
 
     // Send Suggest    
     users.forEach(user => {
-        $(user).on('click', function () {
+        user.onclick = function (params) {
+            params.preventDefault();
             let userId = user.getAttribute('data-id');
             let parent = user.parentElement;
             user.remove();
-            console.log('ok');
+            console.log(user);
             $.ajax({
                 url: `/Home/SendSuggest?id=${userId}`,
                 type: "Get",
@@ -202,7 +281,7 @@ $(document).ajaxComplete(function () {
                 }
             });
 
-        });
+        };
     });
 
     message.addEventListener('focus', function (params) {
@@ -227,12 +306,30 @@ $(document).ajaxComplete(function () {
         }
     });
 
+    allFriends.forEach(friend => {
+        friend.onclick = function () {
+            if ($('.chat')) {
+                $('.chat').remove();
+            }
+            let userId = friend.getAttribute('data-id');
+            //let parent = user.parentElement;
+            //user.remove();
+            $.ajax({
+                url: `/Home/OpenFriendWindow?id=${userId}`,
+                type: "Get",
+                success: function (response) {
+                    $(body).append(response);
+                }
+            });
+
+        }
+    });
+
     //Send Message when click send button
     sendbtn.onclick = function (params) {
         params.preventDefault();
         let userId = sendbtn.getAttribute('data-id');
         let text = message.textContent;
-
 
         if (message.textContent.length != 0) {
             $.ajax({
@@ -255,7 +352,7 @@ $(document).ajaxComplete(function () {
     emoji.onclick = function (event) {
         event.preventDefault();
 
-        let emojiList = CreateEmojiList();
+        let emojiList = CreateEmojiList(message);
         if (emoji.parentElement.querySelector('.emoji-container') == null)
             emoji.parentElement.appendChild(emojiList);
         else
@@ -263,57 +360,68 @@ $(document).ajaxComplete(function () {
     };
 
 
-    //Function that Create emoji list 
-    function CreateEmojiList() {
-        let emojiList = document.createElement('ul');
-        emojiList.classList.add('emoji-container');
+});
 
+//Function that Create emoji list 
+function CreateEmojiList(message) {
+    let emojiList = document.createElement('ul');
+    emojiList.classList.add('emoji-container');
+    emojiList.classList.add('scroll-appeareance');
+
+    let emoliListItem = document.createElement('li');
+    emoliListItem.classList.add('w-100');
+    emojiList.appendChild(emoliListItem);
+
+    let p = document.createElement('p');
+    p.classList.add('text-muted');
+    p.classList.add('small');
+    p.classList.add('fw-bold');
+    p.classList.add('mx-2');
+    p.textContent = 'Gülen Yüzler ve İnsanlar';
+    emoliListItem.appendChild(p);
+
+    for (let index = 128512; index < 128591; index++) {
         let emoliListItem = document.createElement('li');
-        emoliListItem.classList.add('w-100');
         emojiList.appendChild(emoliListItem);
 
-        let p = document.createElement('p');
-        p.classList.add('text-muted');
-        p.classList.add('small');
-        p.classList.add('fw-bold');
-        p.classList.add('mx-2');
-        p.textContent = 'Gülen Yüzler ve İnsanlar';
-        emoliListItem.appendChild(p);
+        let emojiLink = document.createElement('a');
+        emoliListItem.appendChild(emojiLink);
 
-        for (let index = 128512; index < 128591; index++) {
-            let emoliListItem = document.createElement('li');
-            emojiList.appendChild(emoliListItem);
+        let emojiSpan = document.createElement('span');
+        emojiSpan.innerHTML = '&#' + index;
+        emojiLink.appendChild(emojiSpan);
 
-            let emojiLink = document.createElement('a');
-            emoliListItem.appendChild(emojiLink);
-
-            let emojiSpan = document.createElement('span');
-            emojiSpan.innerHTML = '&#' + index;
-            emojiLink.appendChild(emojiSpan);
-
-            emojiLink.addEventListener('click', function (params) {
+        emojiLink.addEventListener('click', function (params) {
+            if ($(message).hasClass('isTextarea')) {
+                message.value += emojiSpan.textContent;
+            }
+            else {
                 message.textContent += emojiSpan.textContent;
-            });
-        }
-
-        for (let index = 128064; index < 128170; index++) {
-            let emoliListItem = document.createElement('li');
-            emojiList.appendChild(emoliListItem);
-
-            let emojiLink = document.createElement('a');
-            emoliListItem.appendChild(emojiLink);
-
-            let emojiSpan = document.createElement('span');
-            emojiSpan.innerHTML = '&#' + index;
-            emojiLink.appendChild(emojiSpan);
-
-            emojiLink.addEventListener('click', function (params) {
-                message.textContent += emojiSpan.textContent;
-            });
-        }
-
-        return emojiList;
-
+            }
+        });
     }
 
-});
+    for (let index = 128064; index < 128170; index++) {
+        let emoliListItem = document.createElement('li');
+        emojiList.appendChild(emoliListItem);
+
+        let emojiLink = document.createElement('a');
+        emoliListItem.appendChild(emojiLink);
+
+        let emojiSpan = document.createElement('span');
+        emojiSpan.innerHTML = '&#' + index;
+        emojiLink.appendChild(emojiSpan);
+
+        emojiLink.addEventListener('click', function (params) {
+            if ($(message).hasClass('isTextarea')) {
+                message.value += emojiSpan.textContent;
+            }
+            else {
+                message.textContent += emojiSpan.textContent;
+            }
+        });
+    }
+
+    return emojiList;
+
+}

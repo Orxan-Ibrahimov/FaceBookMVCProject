@@ -10,5 +10,6 @@ namespace FaceBookProject.ViewModels
     {
         public List<AppUser> AllUsers { get; set; }
         public AppUser User { get; set; }
+        public Story Story { get; set; }
     }
 }

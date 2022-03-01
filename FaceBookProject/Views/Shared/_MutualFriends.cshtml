@@ -1,0 +1,36 @@
+﻿@model ProfileVM
+@{
+    Layout = null;
+}
+
+    @foreach (var friend in Model.MutualFriends)
+    {
+        <li class="col-12 col-lg-6">
+            <div class="d-flex align-items-center justify-content-between my-3">
+                <a asp-controller="Profile" asp-action="Index" asp-route-id="@friend.Id">
+                    <img src="~/assets/img/@friend.Profile" width="75" height="75" class="rounded" alt="profile" />
+                </a>
+                <div class="mx-3">
+                    <a asp-controller="Profile" asp-action="Index" asp-route-id="@friend.Id" class="text-white">
+                        <h6>@friend.FirstName @friend.LastName</h6>
+                    </a>
+                    <a href="" class="text-white text-hover-underline"><small>@friend.Friends.Count(f => Model.User.Friends.FirstOrDefault(mf => mf.FriendId == f.FriendId) != null) ortak arkadas</small></a>
+                </div>
+                @if (Model.User.Friends.Count(f => f.FriendId == friend.Id) == 0)
+                {
+                    <a id="sendSuggest" data-id="@friend.Id" class="btn btn-primary">Arkadaşi Ekle</a>
+                }
+                else
+                {
+                    <a href="" class="text-white rounded params"><i class="fas fa-ellipsis-h"></i></a>
+                }
+            </div>
+        </li>
+
+    }
+    <li class="col-12">
+        <a href="" class="w-100 d-block text-center p-2 rounded bg-buton text-white">
+            Tumunu
+            Gor
+        </a>
+    </li>

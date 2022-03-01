@@ -121,6 +121,393 @@ namespace FaceBookProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Behavior", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EmotionType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Behaviors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmotionType = 1,
+                            Icon = "happy.png",
+                            Text = "happy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmotionType = 1,
+                            Icon = "loved.png",
+                            Text = "loved"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EmotionType = 1,
+                            Icon = "alone.png",
+                            Text = "alone"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EmotionType = 1,
+                            Icon = "OK.png",
+                            Text = "OK"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EmotionType = 1,
+                            Icon = "sick.png",
+                            Text = "sick"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            EmotionType = 1,
+                            Icon = "thoughtful.png",
+                            Text = "thoughtful"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            EmotionType = 1,
+                            Icon = "motivated.png",
+                            Text = "motivated"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            EmotionType = 1,
+                            Icon = "cool.png",
+                            Text = "cool"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            EmotionType = 1,
+                            Icon = "thankful.png",
+                            Text = "thankful"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            EmotionType = 1,
+                            Icon = "inLove.png",
+                            Text = "in-love"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            EmotionType = 1,
+                            Icon = "crazy.png",
+                            Text = "crazy"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            EmotionType = 1,
+                            Icon = "relaxed.png",
+                            Text = "relaxed"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            EmotionType = 1,
+                            Icon = "blissful.png",
+                            Text = "blissful"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            EmotionType = 1,
+                            Icon = "excited.png",
+                            Text = "excited"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            EmotionType = 1,
+                            Icon = "festive.png",
+                            Text = "festive"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            EmotionType = 1,
+                            Icon = "fantastic.png",
+                            Text = "fantastic"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            EmotionType = 1,
+                            Icon = "grateful.png",
+                            Text = "grateful"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            EmotionType = 1,
+                            Icon = "blessed.png",
+                            Text = "blessed"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            EmotionType = 1,
+                            Icon = "lovely.png",
+                            Text = "lovely"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            EmotionType = 1,
+                            Icon = "wonderful.png",
+                            Text = "wonderful"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            EmotionType = 1,
+                            Icon = "amused.png",
+                            Text = "amused"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            EmotionType = 1,
+                            Icon = "silly.png",
+                            Text = "silly"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            EmotionType = 1,
+                            Icon = "sad.png",
+                            Text = "sad"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            EmotionType = 1,
+                            Icon = "safe.png",
+                            Text = "safe"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            EmotionType = 1,
+                            Icon = "worried.png",
+                            Text = "worried"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            EmotionType = 1,
+                            Icon = "trapped.png",
+                            Text = "trapped"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            EmotionType = 1,
+                            Icon = "threatened.png",
+                            Text = "threatened"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            EmotionType = 1,
+                            Icon = "thirsty.png",
+                            Text = "thirsty"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            EmotionType = 1,
+                            Icon = "super.png",
+                            Text = "super"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            EmotionType = 1,
+                            Icon = "smart.png",
+                            Text = "smart"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            EmotionType = 1,
+                            Icon = "scared.png",
+                            Text = "scared"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            EmotionType = 1,
+                            Icon = "rich.png",
+                            Text = "rich"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            EmotionType = 1,
+                            Icon = "perplexed.png",
+                            Text = "perplexed"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            EmotionType = 1,
+                            Icon = "numb.png",
+                            Text = "numb"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            EmotionType = 1,
+                            Icon = "naked.png",
+                            Text = "naked"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            EmotionType = 1,
+                            Icon = "invisible.png",
+                            Text = "invisible"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            EmotionType = 1,
+                            Icon = "inspired.png",
+                            Text = "inspired"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            EmotionType = 1,
+                            Icon = "furious.png",
+                            Text = "furious"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            EmotionType = 1,
+                            Icon = "funny.png",
+                            Text = "funny"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            EmotionType = 1,
+                            Icon = "embarassed.png",
+                            Text = "embarassed"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            EmotionType = 1,
+                            Icon = "cold.png",
+                            Text = "cold"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            EmotionType = 1,
+                            Icon = "broken.png",
+                            Text = "broken"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            EmotionType = 1,
+                            Icon = "hopeful.png",
+                            Text = "hopeful"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            EmotionType = 1,
+                            Icon = "sarcastic.png",
+                            Text = "sarcastic"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            EmotionType = 1,
+                            Icon = "heartbroken.png",
+                            Text = "heartbroken"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            EmotionType = 1,
+                            Icon = "bored.png",
+                            Text = "bored"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            EmotionType = 1,
+                            Icon = "beautiful.png",
+                            Text = "beautiful"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            EmotionType = 1,
+                            Icon = "irritated.png",
+                            Text = "irritated"
+                        });
+                });
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Comment", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
                     b.Property<int?>("Id")
@@ -148,6 +535,21 @@ namespace FaceBookProject.Migrations
                     b.ToTable("Friends");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Hobby", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hobby");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Image", b =>
                 {
                     b.Property<int?>("Id")
@@ -167,6 +569,31 @@ namespace FaceBookProject.Migrations
                     b.HasIndex("AlbumId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Like", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
@@ -202,6 +629,39 @@ namespace FaceBookProject.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Story", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+
+                    b.Property<int?>("EmotionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Header")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmotionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Stories");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Suggest", b =>
                 {
                     b.Property<int?>("Id")
@@ -227,6 +687,31 @@ namespace FaceBookProject.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Suggests");
+                });
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.UserHobby", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("HobbyId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HobbyId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HobbyId1");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserHobbies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -367,6 +852,17 @@ namespace FaceBookProject.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Comment", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Story", "Story")
+                        .WithMany("Comments")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Friendship", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Friend")
@@ -385,6 +881,17 @@ namespace FaceBookProject.Migrations
                         .HasForeignKey("AlbumId");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Like", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Story", "Story")
+                        .WithMany("Likes")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("Likes")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Message", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Acceptor")
@@ -396,6 +903,17 @@ namespace FaceBookProject.Migrations
                         .HasForeignKey("SenderId");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Story", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Behavior", "Emotion")
+                        .WithMany("Stories")
+                        .HasForeignKey("EmotionId");
+
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("Stories")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Suggest", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Acceptor")
@@ -405,6 +923,17 @@ namespace FaceBookProject.Migrations
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId");
+                });
+
+            modelBuilder.Entity("FaceBookProject.Models.Entity.UserHobby", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Hobby", "Hobby")
+                        .WithMany("UserHobbies")
+                        .HasForeignKey("HobbyId1");
+
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("UserHobbies")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,12 +1,16 @@
 ﻿using FaceBookProject.DAL;
+using FaceBookProject.Helpers.Methods;
 using FaceBookProject.Models.Entity;
 using FaceBookProject.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,15 +19,17 @@ namespace FaceBookProject.Controllers
     public class HomeController : Controller
     {
         private readonly FacebookDbContext _db;
+        private readonly IWebHostEnvironment _env;
 
-        public HomeController(FacebookDbContext db)
+        public HomeController(FacebookDbContext db, IWebHostEnvironment env)
         {
             _db = db;
+            _env = env;
         }
 
         public IActionResult Index()
         {
-            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
+            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).Include(u=>u.Stories).ThenInclude(s=>s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
               FirstOrDefault(u=>u.UserName == User.Identity.Name);
 
             if (user == null)
@@ -31,12 +37,48 @@ namespace FaceBookProject.Controllers
 
             HomeVM home = new HomeVM
             {
-                User = user
+                User = user                
             };
 
             return View(home);
         }
 
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult SendStory(StoryBoxVM storyBoxVM)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            AppUser user = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Stories).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+              FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if (user == null)
+                return NotFound();
+
+            if (storyBoxVM.Behavior != null)
+                storyBoxVM.Story.EmotionId = storyBoxVM.Behavior.Id;
+
+            if (ModelState["Story.Photo"].ValidationState == ModelValidationState.Invalid)
+                return View(storyBoxVM);
+
+            Methods method = new Methods(_env);
+            storyBoxVM.Story.Image = method.RenderImage(storyBoxVM.Story.Photo);
+            storyBoxVM.Story.UserId = user.Id;
+
+
+            StoryBoxVM storyBox = new StoryBoxVM
+            {
+                User = user,
+                Story = storyBoxVM.Story
+            };
+
+            
+            _db.Stories.Add(storyBox.Story);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
         public IActionResult SearchUser(string search)
         {
             if (string.IsNullOrEmpty(search))
@@ -119,7 +161,7 @@ namespace FaceBookProject.Controllers
 
             HomeVM home = new HomeVM
             {
-                User = acceptor
+                User = sender
             };
 
             return View("_AcceptSuggest", home);
@@ -177,7 +219,6 @@ namespace FaceBookProject.Controllers
 
             return View("_OpenFriendWindow", chat);
         }
-
         
         public IActionResult SendMessage(string id,string message)
         {
@@ -209,6 +250,54 @@ namespace FaceBookProject.Controllers
 
             return View("_SendMessage", chat);
         }
+        //public string RenderImage(IFormFile photo)
+        //{
+        //    if (!photo.ContentType.Contains("image"))
+        //    {
+        //        return null;
+        //    }
+        //    if (photo.Length / 1024 > 10000)
+        //    {
+        //        return null;
+        //    }
+
+        //    string filename = Guid.NewGuid().ToString() + '-' + photo.FileName;
+        //    string environment = _env.WebRootPath;
+        //    string newSlider = Path.Combine(environment, "assets", "img");
+
+
+        //    if (!Directory.Exists(newSlider))
+        //    {
+        //        Directory.CreateDirectory(newSlider);
+        //    }
+        //    newSlider = Path.Combine(newSlider, filename);
+
+        //    using (FileStream file = new FileStream(newSlider, FileMode.Create))
+        //    {
+        //        photo.CopyTo(file);
+        //    }
+
+        //    return filename;
+        //}
+
+        public IActionResult AddEmotion(int? id)
+        {
+            if (id == null)
+                return View();
+
+            Behavior emotion = _db.Behaviors.FirstOrDefault(b => b.Id == id);
+
+            if (emotion == null)
+                return NotFound();
+
+            StoryBoxVM emotionVM = new StoryBoxVM
+            {
+                Behavior = emotion
+            };
+
+            return View("_AddEmotion", emotionVM);
+        }
 
     }
+
 }
