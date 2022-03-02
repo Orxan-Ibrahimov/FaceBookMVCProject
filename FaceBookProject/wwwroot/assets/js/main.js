@@ -23,8 +23,10 @@ let emotions = document.querySelector('#emotions');
 let emotionOpen = document.querySelectorAll('.emotion-open'); 
 let howFeel = document.querySelector('#howFeel');
 let feelingBtns = document.querySelectorAll('.feelingBtn'); 
-let searchEmotion = document.querySelector('#emotions #searchEmotion');
+let searchEmotion = document.querySelector('#emotions #searchEmotion'); 
 let emotionItems = document.querySelectorAll('#emotions .facemenu-list .facemenu-list-item');
+let storyLikes = document.querySelectorAll('.story .like');
+//let emotionItems = document.querySelectorAll('#emotions .facemenu-list .facemenu-list-item');
 //let message = document.querySelector('.chat-footer .textarea span');
 
 
@@ -44,6 +46,36 @@ window.addEventListener('load', function (params) {
         });
     });
 
+    $(storyLikes).each(function (index, element) {
+        $(element).on('click', function (event) {
+            event.preventDefault();
+            if ($(element).hasClass('text-muted')) {
+                $(element).removeClass('text-muted').addClass('text-primary');
+                $(element).children().removeClass('far').addClass('fas');
+            }
+            else {
+                $(element).removeClass('text-primary').addClass('text-muted');
+                $(element).children().removeClass('fas').addClass('far');
+            }
+
+            let storyId = element.getAttribute('data-story-id');
+            let userId = element.getAttribute('data-user-id');
+
+            let userImpressions = element.parentElement.parentElement.parentElement.parentElement.querySelector('.story-details > .user-impressions');
+            let storyDetails = element.parentElement.parentElement.parentElement.parentElement.querySelector('.story-details .likeCount');
+
+            $(storyDetails).remove();
+
+            $.ajax({
+                url: `/Home/Like?userId=${userId}&storyId=${storyId}`,
+                type: "Get",
+                success: function (response) {
+                    $(userImpressions).prepend(response);
+                }
+            });
+
+        });
+    });
     // Send Suggest    
     users.forEach(user => {
         user.onclick = function (params) {

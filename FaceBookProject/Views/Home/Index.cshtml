@@ -129,14 +129,14 @@
                     </ul>
                 </div>
 
-                @foreach (var story in Model.User.Stories)
+                @foreach (var story in Model.Stories)
                 {
                     <div class="story my-3">
                         <div class="story-header d-flex align-items-center">
-                            <img class="rounded-circle" src="~/assets/img/@Model.User.Profile" width="50" height="50" alt="profile" />
+                            <img class="rounded-circle" src="~/assets/img/@story.User.Profile" width="50" height="50" alt="profile" />
                             <div class="mx-2">
                                 <h6 class="text-white">
-                                    @Model.User.UserName
+                                    @story.User.UserName
                                     @if (story.Emotion != null)
                                     {
                                     <span class="text-muted">
@@ -159,8 +159,8 @@
                             <img src="~/assets/img/@story.Image" class="w-100 my-3" alt="image" />
                         </div>
                         <div class="story-details">
-                            <div class="d-flex justify-content-between">
-                                <a href=""><i class="fas fa-thumbs-up"></i> 1,9B</a>
+                            <div class="d-flex justify-content-between user-impressions">
+                                <a href="" class="likeCount"><i class="fas fa-thumbs-up"></i> <span class="text-hover-underline text-muted">@story.Likes?.Count()</span></a>
                                 <div class="comment-count d-flex">
                                     <a href="" class="text-muted">508 Yorum</a>
                                     <a href="" class="text-muted">18 Paylasim</a>
@@ -170,9 +170,8 @@
                         <div class="story-footer my-3">
                             <ul class="row">
                                 <li class="col-4">
-                                    <a href="" class="text-muted d-block text-center">
-                                        <i class="far fa-thumbs-up"></i> Begen
-                                    </a>
+                                    <a href="" data-story-id="@story.Id" data-user-id="@Model.User.Id" class="btn @(story.Likes.Exists(l=>l.UserId == Model.User.Id)?"text-primary":"text-muted") text-center like">
+                                        <i class="@(story.Likes.Exists(l=>l.UserId == story.User.Id)?"fas":"far") fa-thumbs-up"></i>Begen</a>
                                 </li>
                                 <li class="col-4">
                                     <a href="" class="text-muted d-block text-center">

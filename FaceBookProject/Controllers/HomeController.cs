@@ -29,15 +29,24 @@ namespace FaceBookProject.Controllers
 
         public IActionResult Index()
         {
-            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).Include(u=>u.Stories).ThenInclude(s=>s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
+            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).ThenInclude(f=>f.Stories).ThenInclude(s=>s.Likes).Include(u=>u.Stories).ThenInclude(s=>s.Likes).Include(u => u.Stories).ThenInclude(s => s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
               FirstOrDefault(u=>u.UserName == User.Identity.Name);
+            List<Story> stories = new List<Story>();
+
+            stories.AddRange(user.Stories);
+
+            foreach (var friendship in user.Friends)
+            {
+                stories.AddRange(friendship.Friend.Stories);
+            }
 
             if (user == null)
                 return NotFound();
 
             HomeVM home = new HomeVM
             {
-                User = user                
+                User = user,
+                Stories = stories
             };
 
             return View(home);
@@ -50,7 +59,7 @@ namespace FaceBookProject.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            AppUser user = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Stories).Include(u => u.Suggests).ThenInclude(s => s.Sender).
+            AppUser user = _db.Users.Include(u => u.Friends).ThenInclude(f => f.Friend).Include(u=>u.Stories).ThenInclude(s=>s.Likes).Include(u => u.Suggests).ThenInclude(s => s.Sender).
               FirstOrDefault(u => u.UserName == User.Identity.Name);
 
             if (user == null)
@@ -309,5 +318,43 @@ namespace FaceBookProject.Controllers
 
             return View("_SearchEmotion", emotionVM);
         }
+
+        public IActionResult Like(string userId,int? storyId)
+        {
+            if (storyId == null || userId == null)
+                return NotFound();
+
+            Story story = _db.Stories.Include(s=>s.Likes).ThenInclude(l=>l.User).FirstOrDefault(s=>s.Id == storyId);
+
+            if (story == null)
+                return NotFound();
+
+            if (story.Likes == null || !story.Likes.Exists(l=>l.User.Id == userId))
+            {
+                Like like = new Like
+                {
+                    StoryId = storyId,
+                    UserId = userId
+                };
+
+                _db.Likes.Add(like);
+            }
+            else
+            {
+                _db.Likes.Remove(story.Likes.FirstOrDefault(l => l.User.Id == userId));
+            }
+
+
+            _db.SaveChanges();
+
+            StoryBoxVM storyBox = new StoryBoxVM
+            {
+                Story = story
+            };
+
+            return View("_Like", storyBox);
+        }
+
+        
     }
 }
