@@ -26,7 +26,6 @@ namespace FaceBookProject.DAL
         public DbSet<UserHobby> UserHobbies { get; set; }
         public DbSet<Behavior> Behaviors { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);           
@@ -38,6 +37,7 @@ namespace FaceBookProject.DAL
                Property(f => f.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
             builder.Entity<Story>().
               Property(s => s.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+            
 
             builder.Entity<Friendship>()
                 .HasOne(d => d.User)

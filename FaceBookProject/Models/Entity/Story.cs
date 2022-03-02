@@ -21,5 +21,8 @@ namespace FaceBookProject.Models.Entity
         public int? EmotionId { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Like> Likes { get; set; }
+        public int ShareCount { get; set; }
+        public Story Share { get; set; }
+        public int? ShareId { get; set; }
     }
 }

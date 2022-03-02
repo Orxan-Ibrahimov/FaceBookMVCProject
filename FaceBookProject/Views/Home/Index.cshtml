@@ -131,61 +131,65 @@
 
                 @foreach (var story in Model.Stories)
                 {
-                    <div class="story my-3">
-                        <div class="story-header d-flex align-items-center">
-                            <img class="rounded-circle" src="~/assets/img/@story.User.Profile" width="50" height="50" alt="profile" />
-                            <div class="mx-2">
-                                <h6 class="text-white">
-                                    @story.User.UserName
-                                    @if (story.Emotion != null)
-                                    {
-                                    <span class="text-muted">
-                                        is
-                                        <img src="~/assets/img/emotions/@story.Emotion.Icon" width="20" height="20" class="emotion-icon" /> feeling @story.Emotion.Text
-                                    </span>
+            <div class="story my-3">
+                <div class="story-header d-flex align-items-center">
+                    <img class="rounded-circle" src="~/assets/img/@story.User.Profile" width="50" height="50" alt="profile" />
+                    <div class="mx-2">
+                        <h6 class="text-white">
+                            @story.User.UserName
+                            @if (story.Emotion != null)
+                            {
+                                <span class="text-muted">
+                                    is
+                                    <img src="~/assets/img/emotions/@story.Emotion.Icon" width="20" height="20" class="emotion-icon" /> feeling @story.Emotion.Text
+                                </span>
                             }
 
-                                </h6>
-                                <a href="" class="text-muted">@*Danny L Baker*@</a>
-                                <a href="" class="text-muted">@story.CreatedDate.ToString("dd MMMM, HH:mm")</a>
-                                <i class="fas fa-caret-down"></i>
-                            </div>
-                        </div>
-                        <div class="story-text my-2">
-                            <p class="text-white">@story.Header</p>
-                        </div>
+                        </h6>
+                        <a href="" class="text-muted">@*Danny L Baker*@</a>
+                        <a href="" class="text-muted">@story.CreatedDate.ToString("dd MMMM, HH:mm")</a>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="story-text my-2">
+                    <p class="text-white">@story.Header</p>
+                </div>
 
-                        <div class="story-image">
-                            <img src="~/assets/img/@story.Image" class="w-100 my-3" alt="image" />
-                        </div>
-                        <div class="story-details">
-                            <div class="d-flex justify-content-between user-impressions">
-                                <a href="" class="likeCount"><i class="fas fa-thumbs-up"></i> <span class="text-hover-underline text-muted">@story.Likes?.Count()</span></a>
-                                <div class="comment-count d-flex">
-                                    <a href="" class="text-muted">508 Yorum</a>
-                                    <a href="" class="text-muted">18 Paylasim</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="story-footer my-3">
-                            <ul class="row">
-                                <li class="col-4">
-                                    <a href="" data-story-id="@story.Id" data-user-id="@Model.User.Id" class="btn @(story.Likes.Exists(l=>l.UserId == Model.User.Id)?"text-primary":"text-muted") text-center like">
-                                        <i class="@(story.Likes.Exists(l=>l.UserId == story.User.Id)?"fas":"far") fa-thumbs-up"></i>Begen</a>
-                                </li>
-                                <li class="col-4">
-                                    <a href="" class="text-muted d-block text-center">
-                                        <i class="fas fa-comment-dots"></i> Yorum Yap
-                                    </a>
-                                </li>
-                                <li class="col-4">
-                                    <a href="" class="text-muted d-block text-center">
-                                        <i class="fas fa-share"></i> Paylas
-                                    </a>
-                                </li>
-                            </ul>
+                @if (story.Image != null)
+                {
+                    <div class="story-image">
+                        <img src="~/assets/img/@story.Image" class="w-100 my-3" alt="image" />
+                    </div>
+                }
+                <div class="story-details">
+                    <div class="d-flex justify-content-between user-impressions">
+                        <a href="" class="likeCount"><i class="fas fa-thumbs-up"></i> <span class="text-hover-underline text-muted">@story.Likes?.Count()</span></a>
+                        <div class="comment-count d-flex">
+                            <a href="" class="text-muted">508 Yorum</a>
+                            <a href="" class="text-muted text-hover-underline shareCount">@story.ShareCount Shares</a>
                         </div>
                     </div>
+                </div>
+                <div class="story-footer my-3">
+                    <ul class="row">
+                        <li class="col-4">
+                            <a href="" data-story-id="@story.Id" data-user-id="@Model.User.Id" class="btn @(story.Likes.Exists(l=>l.UserId == Model.User.Id)?"text-primary":"text-muted") text-center like">
+                                <i class="@(story.Likes.Exists(l=>l.UserId == story.User.Id)?"fas":"far") fa-thumbs-up"></i>Begen
+                            </a>
+                        </li>
+                        <li class="col-4">
+                            <a href="" class="text-muted d-block text-center">
+                                <i class="fas fa-comment-dots"></i> Yorum Yap
+                            </a>
+                        </li>
+                        <li class="col-4">                            
+                            <a href="" data-story-id="@story.Id" class="btn @(Model.User.Stories.Exists(s=>s.ShareId == story.Id)?"text-primary":"text-muted") text-center share">
+                                <i class="fas fa-share"></i>Paylas
+                            </a>
+                        </li>                        
+                    </ul>
+                </div>
+            </div>
                 }
             </div>
 

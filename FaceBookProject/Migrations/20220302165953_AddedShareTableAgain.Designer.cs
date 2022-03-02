@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302165953_AddedShareTableAgain")]
+    partial class AddedShareTableAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -647,10 +649,10 @@ namespace FaceBookProject.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShareCount")
+                    b.Property<int?>("ShareId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShareId")
+                    b.Property<int?>("StoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

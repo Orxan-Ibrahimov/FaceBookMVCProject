@@ -29,20 +29,22 @@ namespace FaceBookProject.Controllers
 
         public IActionResult Index()
         {
-            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).ThenInclude(f=>f.Stories).ThenInclude(s=>s.Likes).Include(u=>u.Stories).ThenInclude(s=>s.Likes).Include(u => u.Stories).ThenInclude(s => s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).
-              FirstOrDefault(u=>u.UserName == User.Identity.Name);
+            AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).ThenInclude(f=>f.Stories).ThenInclude(s=>s.Likes).Include(u=>u.Stories).ThenInclude(s=>s.Likes).
+                Include(u => u.Stories).ThenInclude(s => s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).FirstOrDefault(u=>u.UserName == User.Identity.Name);            
+
+            if (user == null)
+                return NotFound();
+
             List<Story> stories = new List<Story>();
 
             stories.AddRange(user.Stories);
 
             foreach (var friendship in user.Friends)
             {
-                stories.AddRange(friendship.Friend.Stories);
+                stories.AddRange(friendship.Friend.Stories);                
             }
 
-            if (user == null)
-                return NotFound();
-
+           
             HomeVM home = new HomeVM
             {
                 User = user,
@@ -66,13 +68,12 @@ namespace FaceBookProject.Controllers
                 return NotFound();
 
             if (storyBoxVM.Behavior != null)
-                storyBoxVM.Story.EmotionId = storyBoxVM.Behavior.Id;
-
-            if (ModelState["Story.Photo"].ValidationState == ModelValidationState.Invalid)
-                return View(storyBoxVM);
+                storyBoxVM.Story.EmotionId = storyBoxVM.Behavior.Id;          
 
             Methods method = new Methods(_env);
-            storyBoxVM.Story.Image = method.RenderImage(storyBoxVM.Story.Photo);
+            if (storyBoxVM.Story.Photo != null)
+                storyBoxVM.Story.Image = method.RenderImage(storyBoxVM.Story.Photo);
+
             storyBoxVM.Story.UserId = user.Id;
 
 
@@ -355,6 +356,47 @@ namespace FaceBookProject.Controllers
             return View("_Like", storyBox);
         }
 
+        public IActionResult Share(int? storyId)
+        {
+            if (storyId == null)
+                return NotFound();
+
+            Story story = _db.Stories.Include(s => s.Likes).ThenInclude(l => l.User).FirstOrDefault(s => s.Id == storyId);
+            AppUser user = _db.Users.Include(s => s.Likes).ThenInclude(l => l.User).Include(u=>u.Stories).ThenInclude(s=>s.Share).FirstOrDefault(s=>s.UserName == User.Identity.Name);
+
+            if (story == null)
+                return NotFound();
+
+            Story myStory = user.Stories.FirstOrDefault(s=>s.ShareId == storyId);
+            if (myStory != null)
+            {
+                _db.Stories.Remove(myStory);
+                story.ShareCount--;
+            }
+            else
+            {
+                Story newStory = new Story
+                {
+                    Share = story,
+                    User = user
+                };
+
+                _db.Stories.Add(newStory);
+                story.ShareCount++;                           
+            }
+
+            StoryBoxVM storyBox = new StoryBoxVM
+            {
+                Story = story,
+                User = user
+            };
+
+            _db.SaveChanges();
+
+            return View("_Share", storyBox);
+        }
+
         
+
     }
 }

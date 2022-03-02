@@ -11,7 +11,7 @@ namespace FaceBookProject.ViewModels
         public Story Story { get; set; }
         public AppUser User { get; set; }
         public Behavior Behavior { get; set; }
-        //public Story Story { get; set; }
+        public int? ShareCount { get; set; }
         //public Story Story { get; set; }
         //public Story Story { get; set; }
     }

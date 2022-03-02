@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302182722_RemovedShareTable")]
+    partial class RemovedShareTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

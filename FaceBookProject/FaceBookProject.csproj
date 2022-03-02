@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220302160857_AddedShareTable.cs" />
+    <Compile Remove="Migrations\20220302160857_AddedShareTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.18">

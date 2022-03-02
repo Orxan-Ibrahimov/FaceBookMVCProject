@@ -4,14 +4,16 @@ using FaceBookProject.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FaceBookProject.Migrations
 {
     [DbContext(typeof(FacebookDbContext))]
-    partial class FacebookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302161025_AddedShareTable")]
+    partial class AddedShareTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -626,6 +628,33 @@ namespace FaceBookProject.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Share", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+
+                    b.Property<int?>("StoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Shares");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Story", b =>
                 {
                     b.Property<int?>("Id")
@@ -647,20 +676,12 @@ namespace FaceBookProject.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ShareCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShareId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmotionId");
-
-                    b.HasIndex("ShareId");
 
                     b.HasIndex("UserId");
 
@@ -908,15 +929,22 @@ namespace FaceBookProject.Migrations
                         .HasForeignKey("SenderId");
                 });
 
+            modelBuilder.Entity("FaceBookProject.Models.Entity.Share", b =>
+                {
+                    b.HasOne("FaceBookProject.Models.Entity.Story", "Story")
+                        .WithMany("Shares")
+                        .HasForeignKey("StoryId");
+
+                    b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
+                        .WithMany("Shares")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("FaceBookProject.Models.Entity.Story", b =>
                 {
                     b.HasOne("FaceBookProject.Models.Entity.Behavior", "Emotion")
                         .WithMany("Stories")
                         .HasForeignKey("EmotionId");
-
-                    b.HasOne("FaceBookProject.Models.Entity.Story", "Share")
-                        .WithMany()
-                        .HasForeignKey("ShareId");
 
                     b.HasOne("FaceBookProject.Models.Entity.AppUser", "User")
                         .WithMany("Stories")
