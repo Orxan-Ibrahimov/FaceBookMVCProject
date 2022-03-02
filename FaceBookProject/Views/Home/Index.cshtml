@@ -154,11 +154,31 @@
                 <div class="story-text my-2">
                     <p class="text-white">@story.Header</p>
                 </div>
-
-                @if (story.Image != null)
+                @if (story.Share != null && story.Share.Image != null)
+                {
+                    <div class="story-image">
+                        <img src="~/assets/img/@story.Share.Image" class="w-100 mt-3" alt="image" />
+                    </div>
+                }
+                else if (story.Image != null)
                 {
                     <div class="story-image">
                         <img src="~/assets/img/@story.Image" class="w-100 my-3" alt="image" />
+                    </div>
+                }
+
+                @if (story.Share != null)
+                {
+                    <div class="story-orginal mb-4 border border-top-0 rounded px-3">
+                        <div class="story-orginal-header pt-2">
+                            <h5 class="text-white">@story.Share.User.UserName</h5>
+                            <p class="text-muted">@story.Share.CreatedDate.ToString("MMMM dd at hh:mm tt")</p>
+                        </div>
+                        <div class="story-orginal-text">
+                            <p class="px-3 text-white border-start border-secondary">
+                                @story.Share.Header
+                            </p>
+                        </div>
                     </div>
                 }
                 <div class="story-details">
@@ -166,7 +186,7 @@
                         <a href="" class="likeCount"><i class="fas fa-thumbs-up"></i> <span class="text-hover-underline text-muted">@story.Likes?.Count()</span></a>
                         <div class="comment-count d-flex">
                             <a href="" class="text-muted">508 Yorum</a>
-                            <a href="" class="text-muted text-hover-underline shareCount">@story.ShareCount Shares</a>
+                            <a href="" class="text-muted text-hover-underline shareCount mx-1">@story.ShareCount Shares</a>
                         </div>
                     </div>
                 </div>
@@ -182,11 +202,11 @@
                                 <i class="fas fa-comment-dots"></i> Yorum Yap
                             </a>
                         </li>
-                        <li class="col-4">                            
+                        <li class="col-4">
                             <a href="" data-story-id="@story.Id" class="btn @(Model.User.Stories.Exists(s=>s.ShareId == story.Id)?"text-primary":"text-muted") text-center share">
                                 <i class="fas fa-share"></i>Paylas
                             </a>
-                        </li>                        
+                        </li>
                     </ul>
                 </div>
             </div>

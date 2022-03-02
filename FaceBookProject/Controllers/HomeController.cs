@@ -30,7 +30,7 @@ namespace FaceBookProject.Controllers
         public IActionResult Index()
         {
             AppUser user = _db.Users.Include(u=>u.Friends).ThenInclude(f=>f.Friend).ThenInclude(f=>f.Stories).ThenInclude(s=>s.Likes).Include(u=>u.Stories).ThenInclude(s=>s.Likes).
-                Include(u => u.Stories).ThenInclude(s => s.Emotion).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).FirstOrDefault(u=>u.UserName == User.Identity.Name);            
+                Include(u => u.Stories).ThenInclude(s => s.Emotion).Include(u=>u.Stories).ThenInclude(s=>s.Share).Include(u=>u.Suggests).ThenInclude(s=>s.Sender).FirstOrDefault(u=>u.UserName == User.Identity.Name);            
 
             if (user == null)
                 return NotFound();
@@ -48,7 +48,7 @@ namespace FaceBookProject.Controllers
             HomeVM home = new HomeVM
             {
                 User = user,
-                Stories = stories
+                Stories = stories.OrderByDescending(s=>s.CreatedDate).ToList()
             };
 
             return View(home);
